@@ -59,3 +59,10 @@ If a command-line output file already exists, the editor asks before replacing i
 The structure notes distinguish confirmed fields from hypotheses. Please report new findings with the original save, the edited save, the exact in-game action, and the affected record or offset.
 
 To validate source syntax before packaging, run `python -m compileall .`.
+
+## References
+
+- **Pokémon icons:** [SciresM/Rumble-World-Save-Tool resources](https://github.com/SciresM/Rumble-World-Save-Tool/tree/master/Pokemon%20Rumble%20World%20Save%20Tool/resources/img)
+- **Species list and names:** [Serebii Pokémon Rumble list](https://www.serebii.net/melee/pokemon.shtml)
+- **Trait descriptions:** [Bulbapedia — Special Traits](https://bulbapedia.bulbagarden.net/wiki/Special_Traits)
+- **Save-format research and related tooling:** [KooShnoo/pokemon-rumble](https://github.com/KooShnoo/pokemon-rumble)
