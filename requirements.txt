@@ -1,0 +1,2 @@
+# The editor has no third-party runtime dependencies.
+# Python is only needed when running the source files directly.

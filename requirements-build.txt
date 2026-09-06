@@ -1,0 +1,2 @@
+# Build-time dependency. End users running a packaged release do not need Python.
+pyinstaller>=6.0,<7
