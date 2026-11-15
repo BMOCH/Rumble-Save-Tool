@@ -1,4 +1,4 @@
-﻿const SIZE = 0x34000, STRIDE = 45;
+const SIZE = 0x34000, STRIDE = 45;
 const $ = id => document.getElementById(id);
 const status = message => $('status').textContent = message;
 let data, boxes, species, moves;
@@ -56,28 +56,40 @@ function loadPokemon() {
   f.favorite.checked = !!(data[p + 19] & 2);
   f.shiny.checked = equal(data.slice(p + 40, p + 44), new Uint8Array([data[p + 22], data[p + 23], data[p + 20], data[p + 21]]));
 }
-function loadDex() {
-  const f = $('dex').elements, p = dexOffset(Number(f.species.value));
-  f.obtained.checked = data[p] >= 0x60; f.crown.value = [96,100,104,108].includes(data[p]) ? data[p] : 96;
-  f.forms.value = data[p + 11]; f.shiny.checked = data[p + 15] === 1; f.centered.checked = !!(data[p + 1] & 128);
+function renderDex() {
+  const rows = $('dex-rows'), query = $('dex-search').value.trim().toLowerCase();
+  rows.replaceChildren();
+  for (const [id, item] of Object.entries(species)) {
+    if (query && !item.name.toLowerCase().includes(query) && !id.includes(query)) continue;
+    const p = dexOffset(Number(id)), tr = document.createElement('tr');
+    const name = document.createElement('th'); name.scope = 'row'; name.textContent = `${id.padStart(3, '0')} ? ${item.name}`; tr.append(name);
+    for (const [field, checked] of [['seen', !!data[p + 11]], ['obtained', data[p] >= 96], ['shiny', data[p + 15] === 1], ['centered', !!(data[p + 1] & 128)]]) {
+      const td = document.createElement('td'), input = document.createElement('input'); input.type = 'checkbox'; input.checked = checked; input.dataset.field = field; input.dataset.id = id; input.setAttribute('aria-label', `${item.name} ${field}`); td.append(input); tr.append(td);
+    }
+    const crownCell = document.createElement('td'), crown = document.createElement('select'); crown.dataset.field = 'crown'; crown.dataset.id = id; crown.setAttribute('aria-label', `${item.name} right crown`);
+    for (const [value, label] of [[96,'None'],[100,'Bronze'],[104,'Silver'],[108,'Gold']]) option(crown, value, label);
+    if (![96,100,104,108].includes(data[p]) && data[p] >= 96) option(crown, data[p], `Unknown (${data[p]})`);
+    crown.value = data[p] >= 96 ? data[p] : 96; crown.disabled = data[p] < 96; crownCell.append(crown); tr.append(crownCell);
+    const formsCell = document.createElement('td'), forms = document.createElement('input'); forms.type = 'number'; forms.min = 0; forms.max = 255; forms.required = true; forms.value = data[p + 11]; forms.dataset.field = 'forms'; forms.dataset.id = id; forms.setAttribute('aria-label', `${item.name} seen forms mask`); formsCell.append(forms); tr.append(formsCell); rows.append(tr);
+  }
 }
 function changed() { status('Changes applied in memory. Download the edited save when you are ready.'); }
 async function init() {
   const [s, m] = await Promise.all([fetch('resources/data/species.json'), fetch('resources/data/moves.json')]);
   if (!s.ok || !m.ok) throw Error('Could not load the species and move data.');
   species = (await s.json()).species; moves = await m.json();
-  for (const [id, item] of Object.entries(species)) { option($('pokemon').elements.species, id, `${id} · ${item.name}`); option($('dex').elements.species, id, `${id} · ${item.name}`); }
+  for (const [id, item] of Object.entries(species)) { option($('pokemon').elements.species, id, `${id} · ${item.name}`); }
   for (const [id, name] of Object.entries(moves)) for (const key of ['move1','move2']) option($('pokemon').elements[key], id, `${id} · ${name}`);
   $('file').disabled = false;
 }
 $('file').disabled = true;
 $('file').addEventListener('change', async e => {
   const file = e.target.files[0]; if (!file) return;
-  try { const loaded = await decode(new Uint8Array(await file.arrayBuffer())); data = loaded; boxes = sections(data); $('money').value = new DataView(data.buffer).getUint32(0x65); $('editor').hidden = false; refreshList(); loadDex(); status(`Loaded ${file.name}. Checksum and box structure are valid.`); }
+  try { const loaded = await decode(new Uint8Array(await file.arrayBuffer())); data = loaded; boxes = sections(data); $('money').value = new DataView(data.buffer).getUint32(0x65); $('editor').hidden = false; refreshList(); renderDex(); status(`Loaded ${file.name}. Checksum and box structure are valid.`); }
   catch (err) { status(`Could not open save: ${err.message}`); }
   e.target.value = '';
 });
-$('slot').addEventListener('change', () => refreshList()); $('record').addEventListener('change', loadPokemon); $('dex').elements.species.addEventListener('change', loadDex);
+$('slot').addEventListener('change', () => refreshList()); $('record').addEventListener('change', loadPokemon);
 $('moneyApply').addEventListener('click', () => { const input = $('money'); if (!input.checkValidity() || input.value === '') { input.reportValidity(); return; } new DataView(data.buffer).setUint32(0x65, Number(input.value)); changed(); });
 $('pokemon').addEventListener('submit', e => {
   e.preventDefault(); const f = e.target.elements, p = currentOffset(), id = Number(f.species.value), individual = f.individual.value.match(/../g).map(x => parseInt(x, 16));
@@ -86,8 +98,30 @@ $('pokemon').addEventListener('submit', e => {
   data.set(individual, p + 20); data[p + 19] = f.favorite.checked ? data[p + 19] | 2 : data[p + 19] & 253;
   data.set(f.shiny.checked ? [individual[2], individual[3], individual[0], individual[1]] : [0,0,0,0], p + 40);
   const d = dexOffset(id); if (data[d] < 96) data[d] = 96; data[d + 11] |= 1; if (f.shiny.checked) data[d + 15] = 1;
-  refreshList(Number($('record').value)); loadDex(); changed();
+  refreshList(Number($('record').value)); renderDex(); changed();
 });
-$('dex').addEventListener('submit', e => { e.preventDefault(); const f = e.target.elements, p = dexOffset(Number(f.species.value)); data[p] = f.obtained.checked ? Number(f.crown.value) : 0; data[p + 1] = f.centered.checked ? data[p + 1] | 128 : data[p + 1] & 127; data[p + 11] = Number(f.forms.value); data[p + 15] = f.shiny.checked ? 1 : 0; changed(); });
+$('dex-search').addEventListener('input', renderDex);
+$('dex-rows').addEventListener('change', e => {
+  const input = e.target, {field, id} = input.dataset; if (!field || !id) return;
+  if (!input.checkValidity()) { input.reportValidity(); return; }
+  const p = dexOffset(Number(id));
+  if (field === 'seen') data[p + 11] = input.checked ? (data[p + 11] || 1) : 0;
+  if (field === 'obtained') data[p] = input.checked ? (data[p] >= 96 ? data[p] : 96) : 0;
+  if (field === 'shiny') data[p + 15] = input.checked ? 1 : 0;
+  if (field === 'centered') data[p + 1] = input.checked ? data[p + 1] | 128 : data[p + 1] & 127;
+  if (field === 'crown') data[p] = Number(input.value);
+  if (field === 'forms') data[p + 11] = Number(input.value);
+  renderDex(); changed();
+});
+document.querySelectorAll('[data-bulk]').forEach(button => button.addEventListener('click', () => {
+  for (const id of Object.keys(species)) {
+    const p = dexOffset(Number(id));
+    if (button.dataset.bulk === 'seen' || button.dataset.bulk === 'crowned') data[p + 11] |= 1;
+    if ((button.dataset.bulk === 'obtained' || button.dataset.bulk === 'crowned') && data[p] < 96) data[p] = 96;
+    if (button.dataset.bulk === 'shiny') data[p + 15] = 1;
+    if (button.dataset.bulk === 'crowned') data[p + 1] |= 128;
+  }
+  renderDex(); changed();
+}));
 $('download').addEventListener('click', async () => { try { const output = await encode(data); const url = URL.createObjectURL(new Blob([output], {type:'application/octet-stream'})); const a = document.createElement('a'); a.href = url; a.download = 'savedata.bin'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); status('Edited save downloaded.'); } catch (err) { status(`Could not save: ${err.message}`); } });
 init().catch(err => status(err.message));
