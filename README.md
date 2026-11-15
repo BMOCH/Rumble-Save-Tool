@@ -1,5 +1,7 @@
 ﻿# Rumble Save Tool
 
+**[Open the browser editor](https://bmoch.github.io/Rumble-Save-Tool/)**
+
 A save editor for the Wii release of Pokemon Rumble. It edits Pokemon box records, the shared Pokedex, and P, then writes the result in the format Dolphin expects. Unknown bytes are preserved unless an operation explicitly changes them.
 
 The format is based on supplied save samples and controlled Dolphin tests. It is not an official Nintendo specification. Always back up a save before editing it!
