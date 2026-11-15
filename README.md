@@ -66,3 +66,11 @@ To validate source syntax before packaging, run `python -m compileall .`.
 - **Species list and names:** [Serebii Pokémon Rumble list](https://www.serebii.net/melee/pokemon.shtml)
 - **Trait descriptions:** [Bulbapedia — Special Traits](https://bulbapedia.bulbagarden.net/wiki/Special_Traits)
 - **Save-format research and related tooling:** [KooShnoo/pokemon-rumble](https://github.com/KooShnoo/pokemon-rumble)
+
+## Browser editor and GitHub Pages
+
+The browser editor supports editing Pokémon fields, P, and shared Pokédex entries. Open a Pokémon Rumble Wii `savedata.bin`, apply changes, and download the result. Processing stays in the browser; no save is uploaded. The desktop editor provides additional features such as duplication, transfer, and bulk operations.
+
+To preview locally, run `python -m http.server` from the repository root and visit `http://localhost:8000/`. Web Crypto requires localhost or HTTPS.
+
+The included GitHub Actions workflow publishes the static site when changes are pushed to `main` (or when run manually). In the repository's **Settings → Pages**, set **Source** to **GitHub Actions**. If the default branch has another name, update the branch in `.github/workflows/pages.yml`. Once the workflow completes, GitHub displays the site URL in the Pages settings.
