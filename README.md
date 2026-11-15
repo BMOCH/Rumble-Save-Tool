@@ -43,8 +43,12 @@ Edit a Pokemon or Pokedex entry:
 ```powershell
 python save_editor.py edit-pokemon saves/savedata.bin edited.bin --slot A --index 0 --trait 7 --favorite
 python save_editor.py edit-dex saves/savedata.bin dex-edited.bin --species 479 --obtained --seen --forms 0x3f
+python save_editor.py delete saves/savedata.bin reduced.bin --slot A --count 100 --order weakest --non-shiny-only
+python save_editor.py delete saves/savedata.bin reduced.bin --slot A --index 12 --index 25
 python save_editor.py validate saves/savedata.bin
 ```
+
+The `delete` command accepts direct record indices or a count with weakest/strongest ordering. Selection filters include species, trait, shiny status, favorite status, and stored-strength ranges.
 
 If a command-line output file already exists, the editor asks before replacing it. Answer `y` or `yes` to continue; any other answer leaves the file unchanged. The GUI uses **Save as**.
 

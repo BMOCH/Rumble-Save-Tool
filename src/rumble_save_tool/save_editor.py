@@ -33,6 +33,26 @@ def find_pokemon_record(data, slot, index):
         raise SystemExit(f'{slot} index {index} is outside 0..{len(records)-1}')
     return start + index * STRIDE, records[index]
 
+def remove_pokemon_records(data, slot, indices):
+    """Remove records from one box while preserving the fixed save size."""
+    box_sections = find_box_sections(data)
+    si = 'ABC'.index(slot)
+    start, records = box_sections[si]
+    selected = sorted(set(indices), reverse=True)
+    if any(index < 0 or index >= len(records) for index in selected):
+        raise ValueError(f'{slot} record index is outside the current box')
+    if len(selected) >= len(records):
+        raise ValueError('At least one Pokémon must remain in the box')
+    for index in selected:
+        off = start + index * STRIDE
+        del data[off:off + STRIDE]
+    new_count = len(records) - len(selected)
+    data[start - 2:start] = new_count.to_bytes(2, 'big')
+    if len(data) > SIZE:
+        raise ValueError('Deleting records produced an oversized save')
+    data.extend(b'\x00' * (SIZE - len(data)))
+    return data
+
 def cmd_list(args):
     data = load_save(args.input)
     start, records = find_box_sections(data)['ABC'.index(args.slot)]
@@ -70,6 +90,54 @@ def cmd_edit(args):
     if args.favorite is True: data[off+0x13] |= 2
     if args.favorite is False: data[off+0x13] &= ~2
     write_save(data, args.output)
+
+def cmd_delete(args):
+    data = load_save(args.input)
+    si = 'ABC'.index(args.slot)
+    _start, records = find_box_sections(data)[si]
+    species_filter = set(args.species or ())
+    trait_filter = set(args.trait or ())
+    candidates = []
+    for index, record in enumerate(records):
+        species = int.from_bytes(record[:2], 'big') >> 7
+        trait = int.from_bytes(record[0x10:0x12], 'big')
+        shiny = record[40:44] == record[22:24] + record[20:22]
+        favorite = bool(record[0x13] & 2)
+        strength = int.from_bytes(record[6:8], 'big')
+        if species_filter and species not in species_filter:
+            continue
+        if trait_filter and trait not in trait_filter:
+            continue
+        if args.non_shiny_only and shiny:
+            continue
+        if args.shiny_only and not shiny:
+            continue
+        if args.favorite is not None and favorite != args.favorite:
+            continue
+        if args.min_strength is not None and strength < args.min_strength:
+            continue
+        if args.max_strength is not None and strength > args.max_strength:
+            continue
+        individual = int.from_bytes(record[20:24], 'big')
+        candidates.append((strength, individual, index))
+    if args.index:
+        indices = sorted(set(args.index))
+        eligible = {index for _strength, _individual, index in candidates}
+        excluded = [index for index in indices if index not in eligible]
+        if excluded:
+            raise SystemExit(f'Records do not match the selected filters: {", ".join(map(str, excluded))}')
+    else:
+        if args.count is None:
+            raise SystemExit('Specify --index or --count')
+        if args.count <= 0:
+            raise SystemExit('--count must be positive')
+        if len(candidates) < args.count:
+            raise SystemExit(f'Only {len(candidates)} eligible records are available')
+        candidates.sort(reverse=args.order == 'strongest')
+        indices = [index for _strength, _individual, index in candidates[:args.count]]
+    remove_pokemon_records(data, args.slot, indices)
+    write_save(data, args.output)
+    print(f'Removed {len(indices)} records from Slot {args.slot}.')
 
 def cmd_dex(args):
     data = load_save(args.input)
@@ -124,6 +192,24 @@ def main():
     e.add_argument('--favorite', action=argparse.BooleanOptionalAction, help='Set or clear the favorite flag.')
     e.set_defaults(func=cmd_edit)
 
+    dl = sub.add_parser('delete', help='Delete selected Pokémon records.',
+                        description='Delete records by index or by count after applying selection filters.')
+    dl.add_argument('input', type=Path, help='Input savedata.bin')
+    dl.add_argument('output', type=Path, help='Output savedata.bin')
+    dl.add_argument('--slot', choices='ABC', default='A', help='Save slot to edit (default: A).')
+    dl.add_argument('--index', type=int, action='append', help='Zero-based record index to delete; repeat for multiple records.')
+    dl.add_argument('--count', type=int, help='Number of matching records to delete.')
+    dl.add_argument('--order', choices=('weakest', 'strongest'), default='weakest', help='Order matching records when using --count (default: weakest).')
+    dl.add_argument('--species', type=int, action='append', help='Filter by internal species ID; repeat for multiple species.')
+    dl.add_argument('--trait', type=int, action='append', help='Filter by trait ID; repeat for multiple traits.')
+    shiny_group = dl.add_mutually_exclusive_group()
+    shiny_group.add_argument('--non-shiny-only', action='store_true', help='Keep only records without a confirmed shiny signature.')
+    shiny_group.add_argument('--shiny-only', action='store_true', help='Keep only records with a confirmed shiny signature.')
+    dl.add_argument('--favorite', action=argparse.BooleanOptionalAction, help='Filter by favorite status.')
+    dl.add_argument('--min-strength', type=int, help='Minimum stored strength value, inclusive.')
+    dl.add_argument('--max-strength', type=int, help='Maximum stored strength value, inclusive.')
+    dl.set_defaults(func=cmd_delete)
+
     d = sub.add_parser('edit-dex', help='Edit one shared Pokédex entry.',
                        description='Change seen, obtained, shiny, form, or crown flags.')
     d.add_argument('input', type=Path, help='Input savedata.bin')
@@ -143,9 +229,9 @@ def main():
     v.set_defaults(func=cmd_validate)
 
     h = sub.add_parser('help', help='Show general or command-specific help.')
-    h.add_argument('topic', nargs='?', choices=('list', 'edit-pokemon', 'edit-dex', 'validate'), help='Command to describe.')
+    h.add_argument('topic', nargs='?', choices=('list', 'edit-pokemon', 'edit-dex', 'delete', 'validate'), help='Command to describe.')
     h.set_defaults(func=show_help, root_parser=p, command_parsers={
-        'list': l, 'edit-pokemon': e, 'edit-dex': d, 'validate': v,
+        'list': l, 'edit-pokemon': e, 'edit-dex': d, 'delete': dl, 'validate': v,
     })
 
     args = p.parse_args()

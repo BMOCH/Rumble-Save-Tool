@@ -118,10 +118,14 @@ class Editor(tk.Tk):
 
     def _row(self, parent, label, var, row):
         ttk.Label(parent, text=label).grid(row=row, column=0, sticky='w', pady=2)
-        entry = ttk.Entry(parent, textvariable=var, width=18); entry.grid(row=row, column=1, pady=2)
-        if label == 'Strength (hex)': self.strength_entry = entry
+        if label == 'Strength':
+            entry = ttk.Spinbox(parent, from_=0, to=127, increment=1, textvariable=var, width=18)
+        else:
+            entry = ttk.Entry(parent, textvariable=var, width=18)
+        entry.grid(row=row, column=1, pady=2)
+        if label == 'Strength': self.strength_entry = entry
         if label == 'Individual hex': self.individual_entry = entry
-        if label == 'Strength (hex)': self._tooltip(entry, 'Two-byte hexadecimal progression value.\nField range: 0000–FFFF.\nNaturally observed range: 0002–0075.\nThe true game-valid upper bound is unknown; values above 0075 are experimental.')
+        if label == 'Strength': self._tooltip(entry, 'Stored as a two-byte big-endian value at record offset +0x06.\nEnter a decimal value from 0 to 127.\nNaturally observed values: 2–117.\n127 is the highest synthetic value tested; displayed power is derived from this and other fields.')
         if label == 'Individual hex': self._tooltip(entry, 'Four bytes contributing to the Pokémon’s individual power and shiny signature.')
 
     def _combo(self, parent, label, var, values, row):
@@ -283,7 +287,7 @@ class Editor(tk.Tk):
         self.trait_combo = self._combo(details, 'Trait', self.vars['trait'], trait_values, 2)
         ttk.Checkbutton(details, text='Favorite', variable=self.favorite, command=self._auto_apply_current).grid(row=3, column=0, columnspan=2, sticky='w')
         ttk.Checkbutton(details, text='Shiny', variable=self.box_shiny, command=self._auto_apply_current).grid(row=4, column=0, columnspan=2, sticky='w')
-        self._row(details, 'Strength (hex)', self.vars['strength'], 5)
+        self._row(details, 'Strength', self.vars['strength'], 5)
 
         self.move1_combo = self._combo(actions, 'Move 1', self.vars['move1'], move_values, 0)
         self.move2_combo = self._combo(actions, 'Move 2', self.vars['move2'], move_values, 1)
@@ -681,7 +685,7 @@ class Editor(tk.Tk):
         self.vars['move2'].set(MOVES.get(move2, "Unknown move"))
         self.vars['move1'].set(MOVES.get(move1, "Unknown move"))
         self.vars['trait'].set(Trait.label_for(trait) if trait else 'None')
-        self.vars['strength'].set(f'{int.from_bytes(r[6:8], "big"):04X}'); self.vars['individual'].set(r[20:24].hex()); self.original_individual = r[20:24].hex(); self.favorite.set(bool(r[19] & 2)); self.box_shiny.set(r[40:44] == r[22:24] + r[20:22])
+        self.vars['strength'].set(str(int.from_bytes(r[6:8], "big"))); self.vars['individual'].set(r[20:24].hex()); self.original_individual = r[20:24].hex(); self.favorite.set(bool(r[19] & 2)); self.box_shiny.set(r[40:44] == r[22:24] + r[20:22])
         self._set_species_icon(sid, form_no)
 
     def apply_pokemon(self, offset=None, refresh=True):
@@ -704,9 +708,12 @@ class Editor(tk.Tk):
         self.data[off:off+2] = ((r << 7) | low).to_bytes(2, 'big')
         for key, pos in [('move2',2),('move1',4),('trait',16)]: self.data[off+pos:off+pos+2] = self._field_value(key).to_bytes(2,'big')
         strength = self.vars['strength'].get().strip()
-        strength_value = int(strength, 16 if not strength.lower().startswith('0x') else 0)
-        if not 0 <= strength_value <= 0xFFFF:
-            raise ValueError('Strength hex must fit in two bytes (0000–FFFF)')
+        try:
+            strength_value = int(strength, 10)
+        except ValueError as exc:
+            raise ValueError('Strength must be a decimal value from 0 to 127') from exc
+        if not 0 <= strength_value <= 127:
+            raise ValueError('Strength must be a decimal value from 0 to 127')
         self.data[off+6:off+8] = strength_value.to_bytes(2, 'big')
         raw = bytes.fromhex(self.vars['individual'].get());
         if len(raw) != 4: raise ValueError('Individual value requires 4 bytes')
@@ -843,11 +850,11 @@ class Editor(tk.Tk):
         strength_text = self.vars['strength'].get().strip()
         if strength_text:
             try:
-                strength_value = int(strength_text, 16 if not strength_text.lower().startswith('0x') else 0)
-                if not 0 <= strength_value <= 0xFFFF:
+                strength_value = int(strength_text, 10)
+                if not 0 <= strength_value <= 127:
                     raise ValueError
             except ValueError:
-                messagebox.showerror('Duplicate Pokémon failed', 'Strength hex must fit in two bytes (0000–FFFF).')
+                messagebox.showerror('Duplicate Pokémon failed', 'Strength must be a decimal value from 0 to 127.')
                 return
             template[6:8] = strength_value.to_bytes(2, 'big')
         individual_text = self.vars['individual'].get().strip()
