@@ -62,7 +62,7 @@ function renderDex() {
   for (const [id, item] of Object.entries(species)) {
     if (query && !item.name.toLowerCase().includes(query) && !id.includes(query)) continue;
     const p = dexOffset(Number(id)), tr = document.createElement('tr');
-    const name = document.createElement('th'); name.scope = 'row'; name.textContent = `${id.padStart(3, '0')} ? ${item.name}`; tr.append(name);
+    const name = document.createElement('th'); name.scope = 'row'; name.textContent = `${id.padStart(3, '0')} - ${item.name}`; tr.append(name);
     for (const [field, checked] of [['seen', !!data[p + 11]], ['obtained', data[p] >= 96], ['shiny', data[p + 15] === 1], ['centered', !!(data[p + 1] & 128)]]) {
       const td = document.createElement('td'), input = document.createElement('input'); input.type = 'checkbox'; input.checked = checked; input.dataset.field = field; input.dataset.id = id; input.setAttribute('aria-label', `${item.name} ${field}`); td.append(input); tr.append(td);
     }
@@ -80,9 +80,9 @@ async function init() {
   species = (await s.json()).species; moves = await m.json();
   for (const [id, item] of Object.entries(species)) { option($('pokemon').elements.species, id, `${id} · ${item.name}`); }
   for (const [id, name] of Object.entries(moves)) for (const key of ['move1','move2']) option($('pokemon').elements[key], id, `${id} · ${name}`);
-  $('file').disabled = false;
+  $('open-file').disabled = false; $('open-file').textContent = 'Open savedata.bin';
 }
-$('file').disabled = true;
+$('open-file').addEventListener('click', () => $('file').click());
 $('file').addEventListener('change', async e => {
   const file = e.target.files[0]; if (!file) return;
   try { const loaded = await decode(new Uint8Array(await file.arrayBuffer())); data = loaded; boxes = sections(data); $('money').value = new DataView(data.buffer).getUint32(0x65); $('editor').hidden = false; refreshList(); renderDex(); status(`Loaded ${file.name}. Checksum and box structure are valid.`); }
@@ -124,4 +124,4 @@ document.querySelectorAll('[data-bulk]').forEach(button => button.addEventListen
   renderDex(); changed();
 }));
 $('download').addEventListener('click', async () => { try { const output = await encode(data); const url = URL.createObjectURL(new Blob([output], {type:'application/octet-stream'})); const a = document.createElement('a'); a.href = url; a.download = 'savedata.bin'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); status('Edited save downloaded.'); } catch (err) { status(`Could not save: ${err.message}`); } });
-init().catch(err => status(err.message));
+init().catch(err => { $('open-file').textContent = 'Editor unavailable'; status(`Could not start the editor: ${err.message} Reload the page to try again.`); });
