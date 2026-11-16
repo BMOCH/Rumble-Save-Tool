@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 from .inspect_saves import STRIDE, decode_save, encode_save, find_box_sections, validate_save_file
 from .paths import DATA
+from .power import estimate_power, slot_power_context
 
 SIZE = 0x34000
 CROWN_VALUES = {'none': 0x60, 'bronze': 0x64, 'silver': 0x68, 'gold': 0x6C}
@@ -57,12 +58,14 @@ def cmd_list(args):
     data = load_save(args.input)
     start, records = find_box_sections(data)['ABC'.index(args.slot)]
     species = __import__('json').loads((DATA / 'species.json').read_text())['species']
+    context = slot_power_context(data, start)
     for i, r in enumerate(records):
         sid = int.from_bytes(r[:2], 'big') >> 7
         trait = int.from_bytes(r[0x10:0x12], 'big')
         print(f'{i:4d}  {sid:3d}  {species.get(str(sid), {}).get("name", "?"):12s} '
               f'move2={int.from_bytes(r[2:4], "big"):03X} move1={int.from_bytes(r[4:6], "big"):03X} '
-              f'trait={trait:02d} strength={int.from_bytes(r[6:8], "big"):04X} fav={bool(r[0x13] & 2)}')
+              f'trait={trait:02d} strength={int.from_bytes(r[6:8], "big"):04X} fav={bool(r[0x13] & 2)} '
+              f'power={estimate_power(r, context) if estimate_power(r, context) is not None else "unavailable"}')
 
 
 def cmd_validate(args):

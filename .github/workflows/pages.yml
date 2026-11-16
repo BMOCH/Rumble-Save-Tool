@@ -24,7 +24,7 @@ jobs:
           mkdir -p _site/resources/data
           cp index.html _site/
           cp -r web _site/
-          cp resources/data/species.json resources/data/moves.json _site/resources/data/
+          cp resources/data/species.json resources/data/moves.json resources/data/power_stats.json _site/resources/data/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

@@ -10,6 +10,7 @@ from .inspect_saves import STRIDE, find_box_sections, decode_save, encode_save, 
 from .constants import MOVES, Trait
 from .paths import DATA, RUMBLE_ICONS, default_dolphin_save
 from .save_editor import CROWN_VALUES
+from .power import estimate_power, slot_power_context
 
 SPECIES = json.loads((DATA / 'species.json').read_text(encoding='utf-8'))['species']
 PLATINUM_VALID_MOVES = json.loads((DATA / 'platinum_valid_moves.json').read_text(encoding='utf-8'))['species']
@@ -56,10 +57,12 @@ class Editor(tk.Tk):
         self.path = None
         self.records = []
         self.slot = 'A'
+        self.power_context = None
         self.save_slot = tk.StringVar(value='A')
         self.sort_mode = tk.StringVar(value='Number')
         self.vars = {k: tk.StringVar() for k in ('species','move1','move2','trait','strength','individual','dex_species','forms','box_form')}
         self.money = tk.StringVar(value='0')
+        self.power_text = tk.StringVar(value='Power: --')
         self.path_text = tk.StringVar(value='No savefile loaded')
         self.danger = tk.BooleanVar(value=False)
         self.original_individual = ''
@@ -113,6 +116,9 @@ class Editor(tk.Tk):
         sb = ttk.Scrollbar(left, orient='vertical', command=self.list.yview); sb.pack(side='right', fill='y'); self.list.configure(yscrollcommand=sb.set)
         right = ttk.Frame(self); right.pack(side='right', fill='both', expand=True, padx=8)
         self._pokemon_panel(right)
+        power_label = ttk.Label(right, textvariable=self.power_text)
+        power_label.pack(anchor='w', pady=(4, 0))
+        self._tooltip(power_label, 'Includes the current slot transfer cap when its progression is recognized. Unsupported forms and unusual records are not calculated.')
         self.tabs = ttk.Notebook(right); self.tabs.pack(fill='both', expand=True, pady=8)
         self._dex_panel(self.tabs)
 
@@ -591,6 +597,7 @@ class Editor(tk.Tk):
         for slot, (start, records) in zip('ABC', find_box_sections(self.data)):
             if slot != self.save_slot.get():
                 continue
+            self.power_context = slot_power_context(self.data, start)
             rows = []
             for i, r in enumerate(records):
                 sid = int.from_bytes(r[:2], 'big') >> 7
@@ -615,7 +622,9 @@ class Editor(tk.Tk):
         trait_id = int.from_bytes(record[16:18], 'big')
         trait_name = '' if trait_id == 0 else Trait.label_for(trait_id)
         marker = '★ ' if shiny else '☆ '
-        return f'{slot}{index:03d}  {marker}{name[:16]:16s} {trait_name}'
+        power = estimate_power(record, self.power_context)
+        power_label = f'~{power}' if power is not None else '--'
+        return f'{slot}{index:03d} {marker}{name[:12]:12s} {power_label:>5s} {trait_name}'
 
     def _update_box_row(self, offset):
         """Update a visible selector row after changing its record in memory."""
@@ -686,6 +695,8 @@ class Editor(tk.Tk):
         self.vars['move1'].set(MOVES.get(move1, "Unknown move"))
         self.vars['trait'].set(Trait.label_for(trait) if trait else 'None')
         self.vars['strength'].set(str(int.from_bytes(r[6:8], "big"))); self.vars['individual'].set(r[20:24].hex()); self.original_individual = r[20:24].hex(); self.favorite.set(bool(r[19] & 2)); self.box_shiny.set(r[40:44] == r[22:24] + r[20:22])
+        power = estimate_power(r, self.power_context)
+        self.power_text.set((f'Power: {power}' if self.power_context is not None else f'Power: {power} (uncapped; slot progression unavailable)') if power is not None else 'Power unavailable for this record')
         self._set_species_icon(sid, form_no)
 
     def apply_pokemon(self, offset=None, refresh=True):
@@ -723,6 +734,8 @@ class Editor(tk.Tk):
         else:
             self.data[off+40:off+44] = b'\x00\x00\x00\x00'
         self.data[off+19] = (self.data[off+19] | 2) if self.favorite.get() else (self.data[off+19] & ~2)
+        power = estimate_power(self.data[off:off + STRIDE], self.power_context)
+        self.power_text.set((f'Power: {power}' if self.power_context is not None else f'Power: {power} (uncapped; slot progression unavailable)') if power is not None else 'Power unavailable for this record')
         self._sync_dex_for_box(r, self.box_shiny.get())
         if refresh:
             self._mark_modified()

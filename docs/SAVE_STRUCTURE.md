@@ -70,14 +70,14 @@ Current field interpretations used by the editor:
 | `+0x02` | 2 | Move slot 2 ID; zero means empty. |
 | `+0x04` | 2 | Move slot 1 ID; zero means empty. |
 | `+0x06` | 2 | Level/progression value stored as big-endian hex. The field can represent `0x0000–0xFFFF`; naturally observed records ranged from `0x0002` to `0x0075`. The true game-valid upper bound is unknown, and values above `0x0075` are experimental. A controlled Rattata edit `0x001E → 0x001F` changed power `388 → 405` and HP `79 → 82`. |
-| `+0x08` | 8 | Unknown. |
+| `+0x08` | 8 | Low 16-bit halves of the HP, attack, defense, and speed bonuses. |
 | `+0x10` | 2 | Trait ID. High byte is zero in supplied records; exact field width unconfirmed. |
 | `+0x12` | 2 | Flags: favorite is mask `0x0002` (bit 1 of byte `+0x13`). Other bits unknown. |
-| `+0x14` | 4 | Individual value affecting power. Garchomp byte tests gave +2/+13/+4/+2, while `+0x15` gave +7 on two Machamp. Effects are quantized and species-specific; Dolphin preserves edits. Exact encoding unknown. |
-| `+0x18` | 9 | Unknown. |
-| `+0x21` | 7 | Unknown identity-related data. |
-| `+0x28` | 4 | Identity/shiny value. For the confirmed shiny pattern, set this to the two 16-bit halves of `+0x14` in reverse order. Other identity uses remain unknown. |
-| `+0x2C` | 1 | Unknown. |
+| `+0x14` | 4 | Big-endian random seed. It contributes to attack and defense variation and shiny status; editing it can change displayed Power. |
+| `+0x18` | 8 | High 16-bit halves of the HP, attack, defense, and speed bonuses. |
+| `+0x20` | 8 | Creation time. |
+| `+0x28` | 4 | Original trainer ID. It participates in the shiny test together with the seed. |
+| `+0x2C` | 1 | End-of-structure marker. |
 
 The editor uses bytes `+0x22` through `+0x2B` as a ten-byte fingerprint when matching selected records. Its in-game purpose is unknown.
 
@@ -676,13 +676,20 @@ Trait IDs and effects (IDs are the values stored at record offset `+0x10`; unlis
 
 ## Not yet decoded
 
-- Power and HP formulas.
+- Full Power and HP behavior across level caps, special forms, and game states.
 - Shiny behavior across other game versions/regions.
 - Forms and low species bits.
 - Full slot metadata and internal checksum rules.
 
-Attack/defense star ratings are external species reference data in `resources/data/species.json`. Power and HP are not decoded save fields in this editor.
+Attack/defense star ratings are external species reference data in `resources/data/species.json`. Power and HP are calculated by the game rather than stored as direct save fields. The editor calculates Power for supported records.
 
 Species and the value at `+0x06` alone do not determine power.
 
-For Garchomp, equal values at `+0x06` always have equal HP in the current sample. Power still varies at equal values, so the unknown individual fields contain an additional power input. No formula is implemented.
+The game's initialization script calculates Power from attack, defense, and a separate HP value:
+
+```text
+step = floor((12 * sqrt(attack) + defense + 0.9 * hp_for_power) / 3.9)
+power = truncate(step ^ 1.1)
+```
+
+The intermediate values depend on species base stats, level, the random seed, and stat bonuses. The game uses 32-bit floating-point arithmetic. `hp_for_power` can differ from displayed maximum HP, and transferred Pokemon may be level-capped. The editor calculates Power for supported species and forms, including transfer caps when slot progression is recognized; unsupported records show no value. The calculation has matched all tested records, though unusual or untested game states may still differ; see [POWER_RESEARCH.md](POWER_RESEARCH.md) for the formulas, verification evidence, and limitations.

@@ -1,4 +1,4 @@
-﻿# Rumble Save Tool
+# Rumble Save Tool
 
 **[Open the browser editor](https://bmoch.github.io/Rumble-Save-Tool/)**
 
@@ -36,7 +36,7 @@ macOS:   ~/Library/Application Support/Dolphin Emulator/Wii/title/00010001/57505
 Linux:   ~/.dolphin-emu/Wii/title/00010001/57505345/data/savedata.bin
 ```
 
-The box editor supports species, form, moves, traits, favorite/shiny flags, strength, individual bytes, duplicating records, and transferring a selected Pokemon between saves. The box list can be kept in box-number order, sorted by species name or Pokédex order, or sorted with favorited Pokémon first. Export creates a portable `.pokemon.json` record; import appends it to the currently selected box. Platinum-derived valid moves for the selected species are grouped first and shown in green. The Pokedex tab supports seen, obtained, shiny, form, and crown flags, including bulk actions. **Validate save** checks the loaded save's checksum and box structure.
+The box editor shows Power for supported records and supports species, form, moves, traits, favorite/shiny flags, strength, individual bytes, duplicating records, and transferring a selected Pokemon between saves. The box list can be kept in box-number order, sorted by species name or Pokédex order, or sorted with favorited Pokémon first. Export creates a portable `.pokemon.json` record; import appends it to the currently selected box. Platinum-derived valid moves for the selected species are grouped first and shown in green. The Pokedex tab supports seen, obtained, shiny, form, and crown flags, including bulk actions. **Validate save** checks the loaded save's checksum and box structure.
 
 ## Command-line editor
 

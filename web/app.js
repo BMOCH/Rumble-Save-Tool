@@ -1,7 +1,8 @@
+import { estimatePower, slotPowerContext } from './power.mjs';
 const SIZE = 0x34000, STRIDE = 45;
 const $ = id => document.getElementById(id);
 const status = message => $('status').textContent = message;
-let data, boxes, species, moves;
+let data, boxes, species, moves, powerStats;
 const u16 = (a, p) => a[p] * 256 + a[p + 1];
 const put16 = (a, p, v) => { a[p] = v >>> 8; a[p + 1] = v & 255; };
 const digest = async a => new Uint8Array(await crypto.subtle.digest('SHA-1', a));
@@ -41,7 +42,7 @@ function option(select, value, label) { select.add(new Option(label, value)); }
 function currentOffset() { const box = boxes[$('slot').selectedIndex]; return box.start + Number($('record').value) * STRIDE; }
 function refreshList(selected = 0) {
   const list = $('record'), box = boxes[$('slot').selectedIndex]; list.replaceChildren();
-  for (let i = 0; i < box.count; i++) { const p = box.start + i * STRIDE, id = u16(data, p) >> 7; option(list, i, `${i + 1}. ${species[id]?.name || `Unknown (${id})`}${data[p + 19] & 2 ? ' ♥' : ''}`); }
+  for (let i = 0; i < box.count; i++) { const p = box.start + i * STRIDE, id = u16(data, p) >> 7; const power = estimatePower(data.subarray(p, p + STRIDE), powerStats, slotPowerContext(data, boxes[$('slot').selectedIndex].start)); option(list, i, `${i + 1}. ${species[id]?.name || `Unknown (${id})`} - Power ${power === null ? '--' : power}${data[p + 19] & 2 ? ' favorite' : ''}`); }
   list.value = String(Math.min(selected, box.count - 1));
   $('pokemon').querySelectorAll('input, select, button').forEach(el => el.disabled = !box.count);
   if (box.count) loadPokemon();
@@ -53,6 +54,9 @@ function loadPokemon() {
     const value = u16(data, p + pos); if (f[name].tagName === 'SELECT' && ![...f[name].options].some(o => o.value === String(value))) option(f[name], value, `Unknown (${value})`); f[name].value = value;
   }
   f.individual.value = Array.from(data.slice(p + 20, p + 24), n => n.toString(16).padStart(2, '0')).join('');
+  const power = estimatePower(data.subarray(p, p + STRIDE), powerStats, slotPowerContext(data, boxes[$('slot').selectedIndex].start));
+  const context = slotPowerContext(data, boxes[$('slot').selectedIndex].start);
+  $('power-value').textContent = power === null ? 'Power unavailable for this record.' : `Power: ${power}${context ? ' (includes transfer cap)' : ' (uncapped; slot progression unavailable)'}`;
   f.favorite.checked = !!(data[p + 19] & 2);
   f.shiny.checked = equal(data.slice(p + 40, p + 44), new Uint8Array([data[p + 22], data[p + 23], data[p + 20], data[p + 21]]));
 }
@@ -75,9 +79,9 @@ function renderDex() {
 }
 function changed() { status('Changes applied in memory. Download the edited save when you are ready.'); }
 async function init() {
-  const [s, m] = await Promise.all([fetch('resources/data/species.json'), fetch('resources/data/moves.json')]);
-  if (!s.ok || !m.ok) throw Error('Could not load the species and move data.');
-  species = (await s.json()).species; moves = await m.json();
+  const [s, m, p] = await Promise.all([fetch('resources/data/species.json'), fetch('resources/data/moves.json'), fetch('resources/data/power_stats.json')]);
+  if (!s.ok || !m.ok || !p.ok) throw Error('Could not load the species and move data.');
+  species = (await s.json()).species; moves = await m.json(); powerStats = await p.json();
   for (const [id, item] of Object.entries(species)) { option($('pokemon').elements.species, id, `${id} · ${item.name}`); }
   for (const [id, name] of Object.entries(moves)) for (const key of ['move1','move2']) option($('pokemon').elements[key], id, `${id} · ${name}`);
   $('open-file').disabled = false; $('open-file').textContent = 'Open savedata.bin';

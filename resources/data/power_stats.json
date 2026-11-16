@@ -1,0 +1,2542 @@
+{
+  "source": "Pokemon Rumble Wii PiiPropData initialization script; base forms",
+  "species": {
+    "1": {
+      "attack": 77,
+      "defense": 81,
+      "hp": 45
+    },
+    "2": {
+      "attack": 95,
+      "defense": 95,
+      "hp": 60
+    },
+    "3": {
+      "attack": 122,
+      "defense": 115,
+      "hp": 80
+    },
+    "4": {
+      "attack": 75,
+      "defense": 61,
+      "hp": 39
+    },
+    "5": {
+      "attack": 100,
+      "defense": 76,
+      "hp": 58
+    },
+    "6": {
+      "attack": 138,
+      "defense": 108,
+      "hp": 78
+    },
+    "7": {
+      "attack": 61,
+      "defense": 76,
+      "hp": 44
+    },
+    "8": {
+      "attack": 79,
+      "defense": 92,
+      "hp": 59
+    },
+    "9": {
+      "attack": 105,
+      "defense": 114,
+      "hp": 79
+    },
+    "10": {
+      "attack": 41,
+      "defense": 36,
+      "hp": 45
+    },
+    "11": {
+      "attack": 35,
+      "defense": 49,
+      "hp": 50
+    },
+    "12": {
+      "attack": 97,
+      "defense": 86,
+      "hp": 60
+    },
+    "13": {
+      "attack": 47,
+      "defense": 46,
+      "hp": 40
+    },
+    "14": {
+      "attack": 35,
+      "defense": 58,
+      "hp": 45
+    },
+    "15": {
+      "attack": 98,
+      "defense": 81,
+      "hp": 65
+    },
+    "16": {
+      "attack": 58,
+      "defense": 52,
+      "hp": 40
+    },
+    "17": {
+      "attack": 76,
+      "defense": 67,
+      "hp": 63
+    },
+    "18": {
+      "attack": 102,
+      "defense": 87,
+      "hp": 83
+    },
+    "19": {
+      "attack": 72,
+      "defense": 38,
+      "hp": 30
+    },
+    "20": {
+      "attack": 104,
+      "defense": 68,
+      "hp": 55
+    },
+    "21": {
+      "attack": 76,
+      "defense": 45,
+      "hp": 40
+    },
+    "22": {
+      "attack": 116,
+      "defense": 78,
+      "hp": 65
+    },
+    "23": {
+      "attack": 73,
+      "defense": 61,
+      "hp": 35
+    },
+    "24": {
+      "attack": 105,
+      "defense": 86,
+      "hp": 60
+    },
+    "25": {
+      "attack": 73,
+      "defense": 44,
+      "hp": 35
+    },
+    "26": {
+      "attack": 116,
+      "defense": 76,
+      "hp": 60
+    },
+    "27": {
+      "attack": 86,
+      "defense": 66,
+      "hp": 50
+    },
+    "28": {
+      "attack": 118,
+      "defense": 91,
+      "hp": 75
+    },
+    "29": {
+      "attack": 58,
+      "defense": 58,
+      "hp": 55
+    },
+    "30": {
+      "attack": 75,
+      "defense": 73,
+      "hp": 70
+    },
+    "31": {
+      "attack": 101,
+      "defense": 107,
+      "hp": 90
+    },
+    "32": {
+      "attack": 69,
+      "defense": 52,
+      "hp": 46
+    },
+    "33": {
+      "attack": 88,
+      "defense": 68,
+      "hp": 61
+    },
+    "34": {
+      "attack": 114,
+      "defense": 97,
+      "hp": 81
+    },
+    "35": {
+      "attack": 70,
+      "defense": 59,
+      "hp": 70
+    },
+    "36": {
+      "attack": 101,
+      "defense": 84,
+      "hp": 95
+    },
+    "37": {
+      "attack": 64,
+      "defense": 67,
+      "hp": 38
+    },
+    "38": {
+      "attack": 105,
+      "defense": 102,
+      "hp": 73
+    },
+    "39": {
+      "attack": 53,
+      "defense": 25,
+      "hp": 115
+    },
+    "40": {
+      "attack": 87,
+      "defense": 50,
+      "hp": 140
+    },
+    "41": {
+      "attack": 57,
+      "defense": 61,
+      "hp": 40
+    },
+    "42": {
+      "attack": 102,
+      "defense": 96,
+      "hp": 75
+    },
+    "43": {
+      "attack": 84,
+      "defense": 84,
+      "hp": 45
+    },
+    "44": {
+      "attack": 96,
+      "defense": 96,
+      "hp": 60
+    },
+    "45": {
+      "attack": 114,
+      "defense": 111,
+      "hp": 75
+    },
+    "46": {
+      "attack": 78,
+      "defense": 76,
+      "hp": 35
+    },
+    "47": {
+      "attack": 103,
+      "defense": 101,
+      "hp": 60
+    },
+    "48": {
+      "attack": 66,
+      "defense": 73,
+      "hp": 60
+    },
+    "49": {
+      "attack": 113,
+      "defense": 88,
+      "hp": 70
+    },
+    "50": {
+      "attack": 74,
+      "defense": 44,
+      "hp": 10
+    },
+    "51": {
+      "attack": 108,
+      "defense": 69,
+      "hp": 35
+    },
+    "52": {
+      "attack": 62,
+      "defense": 40,
+      "hp": 40
+    },
+    "53": {
+      "attack": 95,
+      "defense": 65,
+      "hp": 65
+    },
+    "54": {
+      "attack": 78,
+      "defense": 61,
+      "hp": 50
+    },
+    "55": {
+      "attack": 118,
+      "defense": 91,
+      "hp": 80
+    },
+    "56": {
+      "attack": 97,
+      "defense": 49,
+      "hp": 40
+    },
+    "57": {
+      "attack": 132,
+      "defense": 74,
+      "hp": 65
+    },
+    "58": {
+      "attack": 85,
+      "defense": 62,
+      "hp": 55
+    },
+    "59": {
+      "attack": 137,
+      "defense": 95,
+      "hp": 90
+    },
+    "60": {
+      "attack": 67,
+      "defense": 52,
+      "hp": 40
+    },
+    "61": {
+      "attack": 85,
+      "defense": 69,
+      "hp": 65
+    },
+    "62": {
+      "attack": 103,
+      "defense": 113,
+      "hp": 90
+    },
+    "63": {
+      "attack": 130,
+      "defense": 41,
+      "hp": 25
+    },
+    "64": {
+      "attack": 152,
+      "defense": 56,
+      "hp": 40
+    },
+    "65": {
+      "attack": 175,
+      "defense": 71,
+      "hp": 55
+    },
+    "66": {
+      "attack": 90,
+      "defense": 51,
+      "hp": 70
+    },
+    "67": {
+      "attack": 112,
+      "defense": 74,
+      "hp": 80
+    },
+    "68": {
+      "attack": 146,
+      "defense": 91,
+      "hp": 90
+    },
+    "69": {
+      "attack": 86,
+      "defense": 56,
+      "hp": 50
+    },
+    "70": {
+      "attack": 105,
+      "defense": 71,
+      "hp": 65
+    },
+    "71": {
+      "attack": 125,
+      "defense": 86,
+      "hp": 80
+    },
+    "72": {
+      "attack": 65,
+      "defense": 91,
+      "hp": 40
+    },
+    "73": {
+      "attack": 104,
+      "defense": 116,
+      "hp": 80
+    },
+    "74": {
+      "attack": 87,
+      "defense": 86,
+      "hp": 40
+    },
+    "75": {
+      "attack": 105,
+      "defense": 101,
+      "hp": 55
+    },
+    "76": {
+      "attack": 123,
+      "defense": 118,
+      "hp": 80
+    },
+    "77": {
+      "attack": 107,
+      "defense": 75,
+      "hp": 50
+    },
+    "78": {
+      "attack": 129,
+      "defense": 90,
+      "hp": 65
+    },
+    "79": {
+      "attack": 71,
+      "defense": 70,
+      "hp": 90
+    },
+    "80": {
+      "attack": 108,
+      "defense": 113,
+      "hp": 95
+    },
+    "81": {
+      "attack": 107,
+      "defense": 107,
+      "hp": 25
+    },
+    "82": {
+      "attack": 141,
+      "defense": 127,
+      "hp": 50
+    },
+    "83": {
+      "attack": 79,
+      "defense": 73,
+      "hp": 52
+    },
+    "84": {
+      "attack": 104,
+      "defense": 55,
+      "hp": 35
+    },
+    "85": {
+      "attack": 139,
+      "defense": 80,
+      "hp": 60
+    },
+    "86": {
+      "attack": 56,
+      "defense": 74,
+      "hp": 65
+    },
+    "87": {
+      "attack": 86,
+      "defense": 102,
+      "hp": 90
+    },
+    "88": {
+      "attack": 88,
+      "defense": 62,
+      "hp": 80
+    },
+    "89": {
+      "attack": 119,
+      "defense": 99,
+      "hp": 105
+    },
+    "90": {
+      "attack": 76,
+      "defense": 74,
+      "hp": 30
+    },
+    "91": {
+      "attack": 114,
+      "defense": 127,
+      "hp": 50
+    },
+    "92": {
+      "attack": 122,
+      "defense": 56,
+      "hp": 30
+    },
+    "93": {
+      "attack": 143,
+      "defense": 74,
+      "hp": 45
+    },
+    "94": {
+      "attack": 166,
+      "defense": 91,
+      "hp": 60
+    },
+    "96": {
+      "attack": 59,
+      "defense": 73,
+      "hp": 60
+    },
+    "97": {
+      "attack": 89,
+      "defense": 98,
+      "hp": 85
+    },
+    "98": {
+      "attack": 119,
+      "defense": 69,
+      "hp": 30
+    },
+    "99": {
+      "attack": 153,
+      "defense": 94,
+      "hp": 55
+    },
+    "100": {
+      "attack": 75,
+      "defense": 61,
+      "hp": 40
+    },
+    "101": {
+      "attack": 112,
+      "defense": 84,
+      "hp": 60
+    },
+    "102": {
+      "attack": 71,
+      "defense": 80,
+      "hp": 60
+    },
+    "103": {
+      "attack": 141,
+      "defense": 93,
+      "hp": 95
+    },
+    "104": {
+      "attack": 60,
+      "defense": 81,
+      "hp": 50
+    },
+    "105": {
+      "attack": 92,
+      "defense": 104,
+      "hp": 60
+    },
+    "106": {
+      "attack": 146,
+      "defense": 90,
+      "hp": 50
+    },
+    "107": {
+      "attack": 126,
+      "defense": 103,
+      "hp": 50
+    },
+    "108": {
+      "attack": 69,
+      "defense": 78,
+      "hp": 90
+    },
+    "109": {
+      "attack": 75,
+      "defense": 82,
+      "hp": 40
+    },
+    "110": {
+      "attack": 106,
+      "defense": 107,
+      "hp": 65
+    },
+    "111": {
+      "attack": 92,
+      "defense": 83,
+      "hp": 80
+    },
+    "112": {
+      "attack": 141,
+      "defense": 103,
+      "hp": 105
+    },
+    "113": {
+      "attack": 47,
+      "defense": 58,
+      "hp": 250
+    },
+    "114": {
+      "attack": 116,
+      "defense": 89,
+      "hp": 65
+    },
+    "115": {
+      "attack": 119,
+      "defense": 83,
+      "hp": 105
+    },
+    "116": {
+      "attack": 85,
+      "defense": 59,
+      "hp": 30
+    },
+    "117": {
+      "attack": 118,
+      "defense": 82,
+      "hp": 55
+    },
+    "118": {
+      "attack": 82,
+      "defense": 67,
+      "hp": 45
+    },
+    "119": {
+      "attack": 110,
+      "defense": 84,
+      "hp": 80
+    },
+    "120": {
+      "attack": 89,
+      "defense": 67,
+      "hp": 30
+    },
+    "121": {
+      "attack": 131,
+      "defense": 103,
+      "hp": 60
+    },
+    "122": {
+      "attack": 125,
+      "defense": 98,
+      "hp": 40
+    },
+    "123": {
+      "attack": 140,
+      "defense": 101,
+      "hp": 70
+    },
+    "124": {
+      "attack": 143,
+      "defense": 74,
+      "hp": 65
+    },
+    "125": {
+      "attack": 123,
+      "defense": 80,
+      "hp": 65
+    },
+    "126": {
+      "attack": 125,
+      "defense": 86,
+      "hp": 65
+    },
+    "127": {
+      "attack": 151,
+      "defense": 94,
+      "hp": 65
+    },
+    "128": {
+      "attack": 130,
+      "defense": 85,
+      "hp": 75
+    },
+    "129": {
+      "attack": 27,
+      "defense": 49,
+      "hp": 20
+    },
+    "130": {
+      "attack": 150,
+      "defense": 113,
+      "hp": 95
+    },
+    "131": {
+      "attack": 101,
+      "defense": 102,
+      "hp": 130
+    },
+    "132": {
+      "attack": 60,
+      "defense": 51,
+      "hp": 48
+    },
+    "133": {
+      "attack": 68,
+      "defense": 60,
+      "hp": 55
+    },
+    "134": {
+      "attack": 129,
+      "defense": 89,
+      "hp": 130
+    },
+    "135": {
+      "attack": 148,
+      "defense": 86,
+      "hp": 65
+    },
+    "136": {
+      "attack": 150,
+      "defense": 100,
+      "hp": 65
+    },
+    "137": {
+      "attack": 96,
+      "defense": 75,
+      "hp": 65
+    },
+    "138": {
+      "attack": 100,
+      "defense": 101,
+      "hp": 35
+    },
+    "139": {
+      "attack": 131,
+      "defense": 121,
+      "hp": 70
+    },
+    "140": {
+      "attack": 94,
+      "defense": 91,
+      "hp": 30
+    },
+    "141": {
+      "attack": 139,
+      "defense": 111,
+      "hp": 60
+    },
+    "142": {
+      "attack": 142,
+      "defense": 94,
+      "hp": 80
+    },
+    "143": {
+      "attack": 118,
+      "defense": 90,
+      "hp": 160
+    },
+    "144": {
+      "attack": 118,
+      "defense": 127,
+      "hp": 90
+    },
+    "145": {
+      "attack": 156,
+      "defense": 108,
+      "hp": 90
+    },
+    "146": {
+      "attack": 153,
+      "defense": 114,
+      "hp": 90
+    },
+    "147": {
+      "attack": 77,
+      "defense": 59,
+      "hp": 41
+    },
+    "148": {
+      "attack": 102,
+      "defense": 79,
+      "hp": 61
+    },
+    "149": {
+      "attack": 160,
+      "defense": 121,
+      "hp": 91
+    },
+    "150": {
+      "attack": 203,
+      "defense": 96,
+      "hp": 106
+    },
+    "151": {
+      "attack": 127,
+      "defense": 106,
+      "hp": 100
+    },
+    "152": {
+      "attack": 60,
+      "defense": 77,
+      "hp": 45
+    },
+    "153": {
+      "attack": 77,
+      "defense": 92,
+      "hp": 60
+    },
+    "154": {
+      "attack": 103,
+      "defense": 112,
+      "hp": 80
+    },
+    "155": {
+      "attack": 75,
+      "defense": 61,
+      "hp": 39
+    },
+    "156": {
+      "attack": 100,
+      "defense": 76,
+      "hp": 58
+    },
+    "157": {
+      "attack": 138,
+      "defense": 96,
+      "hp": 78
+    },
+    "158": {
+      "attack": 76,
+      "defense": 68,
+      "hp": 50
+    },
+    "159": {
+      "attack": 95,
+      "defense": 83,
+      "hp": 65
+    },
+    "160": {
+      "attack": 127,
+      "defense": 103,
+      "hp": 85
+    },
+    "161": {
+      "attack": 54,
+      "defense": 42,
+      "hp": 35
+    },
+    "162": {
+      "attack": 97,
+      "defense": 62,
+      "hp": 85
+    },
+    "163": {
+      "attack": 48,
+      "defense": 58,
+      "hp": 60
+    },
+    "164": {
+      "attack": 93,
+      "defense": 88,
+      "hp": 100
+    },
+    "165": {
+      "attack": 52,
+      "defense": 76,
+      "hp": 40
+    },
+    "166": {
+      "attack": 72,
+      "defense": 101,
+      "hp": 55
+    },
+    "167": {
+      "attack": 69,
+      "defense": 61,
+      "hp": 40
+    },
+    "168": {
+      "attack": 101,
+      "defense": 86,
+      "hp": 70
+    },
+    "169": {
+      "attack": 123,
+      "defense": 104,
+      "hp": 85
+    },
+    "170": {
+      "attack": 71,
+      "defense": 68,
+      "hp": 75
+    },
+    "171": {
+      "attack": 92,
+      "defense": 88,
+      "hp": 125
+    },
+    "172": {
+      "attack": 53,
+      "defense": 34,
+      "hp": 20
+    },
+    "173": {
+      "attack": 53,
+      "defense": 44,
+      "hp": 50
+    },
+    "174": {
+      "attack": 48,
+      "defense": 20,
+      "hp": 90
+    },
+    "175": {
+      "attack": 48,
+      "defense": 68,
+      "hp": 35
+    },
+    "176": {
+      "attack": 91,
+      "defense": 110,
+      "hp": 55
+    },
+    "177": {
+      "attack": 86,
+      "defense": 63,
+      "hp": 40
+    },
+    "178": {
+      "attack": 120,
+      "defense": 88,
+      "hp": 65
+    },
+    "179": {
+      "attack": 75,
+      "defense": 51,
+      "hp": 55
+    },
+    "180": {
+      "attack": 92,
+      "defense": 66,
+      "hp": 70
+    },
+    "181": {
+      "attack": 131,
+      "defense": 91,
+      "hp": 90
+    },
+    "182": {
+      "attack": 103,
+      "defense": 104,
+      "hp": 75
+    },
+    "183": {
+      "attack": 31,
+      "defense": 62,
+      "hp": 70
+    },
+    "184": {
+      "attack": 62,
+      "defense": 92,
+      "hp": 100
+    },
+    "185": {
+      "attack": 108,
+      "defense": 102,
+      "hp": 70
+    },
+    "186": {
+      "attack": 108,
+      "defense": 99,
+      "hp": 90
+    },
+    "187": {
+      "attack": 47,
+      "defense": 71,
+      "hp": 35
+    },
+    "188": {
+      "attack": 61,
+      "defense": 81,
+      "hp": 55
+    },
+    "189": {
+      "attack": 76,
+      "defense": 101,
+      "hp": 75
+    },
+    "190": {
+      "attack": 89,
+      "defense": 58,
+      "hp": 55
+    },
+    "191": {
+      "attack": 40,
+      "defense": 42,
+      "hp": 30
+    },
+    "192": {
+      "attack": 113,
+      "defense": 82,
+      "hp": 75
+    },
+    "193": {
+      "attack": 97,
+      "defense": 66,
+      "hp": 65
+    },
+    "194": {
+      "attack": 53,
+      "defense": 56,
+      "hp": 55
+    },
+    "195": {
+      "attack": 95,
+      "defense": 96,
+      "hp": 95
+    },
+    "196": {
+      "attack": 166,
+      "defense": 83,
+      "hp": 65
+    },
+    "197": {
+      "attack": 80,
+      "defense": 129,
+      "hp": 95
+    },
+    "198": {
+      "attack": 108,
+      "defense": 63,
+      "hp": 60
+    },
+    "199": {
+      "attack": 108,
+      "defense": 113,
+      "hp": 95
+    },
+    "200": {
+      "attack": 106,
+      "defense": 84,
+      "hp": 60
+    },
+    "201": {
+      "attack": 84,
+      "defense": 54,
+      "hp": 48
+    },
+    "202": {
+      "attack": 43,
+      "defense": 64,
+      "hp": 190
+    },
+    "203": {
+      "attack": 112,
+      "defense": 74,
+      "hp": 70
+    },
+    "204": {
+      "attack": 71,
+      "defense": 71,
+      "hp": 50
+    },
+    "205": {
+      "attack": 101,
+      "defense": 145,
+      "hp": 75
+    },
+    "206": {
+      "attack": 82,
+      "defense": 70,
+      "hp": 100
+    },
+    "207": {
+      "attack": 95,
+      "defense": 106,
+      "hp": 65
+    },
+    "209": {
+      "attack": 89,
+      "defense": 48,
+      "hp": 60
+    },
+    "210": {
+      "attack": 133,
+      "defense": 70,
+      "hp": 90
+    },
+    "211": {
+      "attack": 118,
+      "defense": 89,
+      "hp": 65
+    },
+    "212": {
+      "attack": 150,
+      "defense": 135,
+      "hp": 70
+    },
+    "213": {
+      "attack": 20,
+      "defense": 251,
+      "hp": 20
+    },
+    "214": {
+      "attack": 151,
+      "defense": 103,
+      "hp": 80
+    },
+    "215": {
+      "attack": 125,
+      "defense": 77,
+      "hp": 55
+    },
+    "216": {
+      "attack": 91,
+      "defense": 53,
+      "hp": 60
+    },
+    "217": {
+      "attack": 146,
+      "defense": 78,
+      "hp": 90
+    },
+    "218": {
+      "attack": 77,
+      "defense": 55,
+      "hp": 40
+    },
+    "219": {
+      "attack": 89,
+      "defense": 127,
+      "hp": 50
+    },
+    "220": {
+      "attack": 62,
+      "defense": 47,
+      "hp": 50
+    },
+    "221": {
+      "attack": 114,
+      "defense": 82,
+      "hp": 100
+    },
+    "222": {
+      "attack": 75,
+      "defense": 109,
+      "hp": 55
+    },
+    "223": {
+      "attack": 80,
+      "defense": 47,
+      "hp": 35
+    },
+    "224": {
+      "attack": 117,
+      "defense": 87,
+      "hp": 75
+    },
+    "225": {
+      "attack": 82,
+      "defense": 60,
+      "hp": 45
+    },
+    "226": {
+      "attack": 97,
+      "defense": 129,
+      "hp": 65
+    },
+    "227": {
+      "attack": 97,
+      "defense": 153,
+      "hp": 65
+    },
+    "228": {
+      "attack": 96,
+      "defense": 64,
+      "hp": 45
+    },
+    "229": {
+      "attack": 137,
+      "defense": 89,
+      "hp": 75
+    },
+    "230": {
+      "attack": 118,
+      "defense": 119,
+      "hp": 75
+    },
+    "231": {
+      "attack": 71,
+      "defense": 59,
+      "hp": 90
+    },
+    "232": {
+      "attack": 134,
+      "defense": 99,
+      "hp": 90
+    },
+    "233": {
+      "attack": 122,
+      "defense": 95,
+      "hp": 85
+    },
+    "234": {
+      "attack": 118,
+      "defense": 66,
+      "hp": 73
+    },
+    "235": {
+      "attack": 32,
+      "defense": 43,
+      "hp": 55
+    },
+    "236": {
+      "attack": 45,
+      "defense": 44,
+      "hp": 35
+    },
+    "237": {
+      "attack": 114,
+      "defense": 111,
+      "hp": 50
+    },
+    "238": {
+      "attack": 102,
+      "defense": 49,
+      "hp": 45
+    },
+    "239": {
+      "attack": 85,
+      "defense": 55,
+      "hp": 45
+    },
+    "240": {
+      "attack": 95,
+      "defense": 61,
+      "hp": 45
+    },
+    "241": {
+      "attack": 104,
+      "defense": 90,
+      "hp": 95
+    },
+    "242": {
+      "attack": 89,
+      "defense": 75,
+      "hp": 255
+    },
+    "243": {
+      "attack": 149,
+      "defense": 96,
+      "hp": 90
+    },
+    "244": {
+      "attack": 145,
+      "defense": 95,
+      "hp": 115
+    },
+    "245": {
+      "attack": 112,
+      "defense": 127,
+      "hp": 100
+    },
+    "246": {
+      "attack": 75,
+      "defense": 71,
+      "hp": 50
+    },
+    "247": {
+      "attack": 97,
+      "defense": 91,
+      "hp": 70
+    },
+    "248": {
+      "attack": 153,
+      "defense": 126,
+      "hp": 100
+    },
+    "249": {
+      "attack": 118,
+      "defense": 160,
+      "hp": 106
+    },
+    "250": {
+      "attack": 159,
+      "defense": 149,
+      "hp": 106
+    },
+    "251": {
+      "attack": 127,
+      "defense": 118,
+      "hp": 100
+    },
+    "252": {
+      "attack": 81,
+      "defense": 57,
+      "hp": 40
+    },
+    "253": {
+      "attack": 109,
+      "defense": 67,
+      "hp": 50
+    },
+    "254": {
+      "attack": 139,
+      "defense": 87,
+      "hp": 70
+    },
+    "255": {
+      "attack": 82,
+      "defense": 60,
+      "hp": 45
+    },
+    "256": {
+      "attack": 99,
+      "defense": 84,
+      "hp": 60
+    },
+    "257": {
+      "attack": 144,
+      "defense": 94,
+      "hp": 80
+    },
+    "258": {
+      "attack": 81,
+      "defense": 62,
+      "hp": 50
+    },
+    "259": {
+      "attack": 98,
+      "defense": 91,
+      "hp": 70
+    },
+    "260": {
+      "attack": 127,
+      "defense": 111,
+      "hp": 100
+    },
+    "261": {
+      "attack": 65,
+      "defense": 41,
+      "hp": 35
+    },
+    "262": {
+      "attack": 108,
+      "defense": 74,
+      "hp": 70
+    },
+    "263": {
+      "attack": 42,
+      "defense": 44,
+      "hp": 38
+    },
+    "264": {
+      "attack": 92,
+      "defense": 64,
+      "hp": 78
+    },
+    "265": {
+      "attack": 53,
+      "defense": 41,
+      "hp": 45
+    },
+    "266": {
+      "attack": 43,
+      "defense": 49,
+      "hp": 50
+    },
+    "267": {
+      "attack": 107,
+      "defense": 71,
+      "hp": 60
+    },
+    "268": {
+      "attack": 43,
+      "defense": 49,
+      "hp": 50
+    },
+    "269": {
+      "attack": 64,
+      "defense": 101,
+      "hp": 60
+    },
+    "270": {
+      "attack": 50,
+      "defense": 64,
+      "hp": 40
+    },
+    "271": {
+      "attack": 72,
+      "defense": 84,
+      "hp": 60
+    },
+    "272": {
+      "attack": 108,
+      "defense": 109,
+      "hp": 80
+    },
+    "273": {
+      "attack": 50,
+      "defense": 52,
+      "hp": 40
+    },
+    "274": {
+      "attack": 85,
+      "defense": 61,
+      "hp": 70
+    },
+    "275": {
+      "attack": 122,
+      "defense": 81,
+      "hp": 90
+    },
+    "276": {
+      "attack": 72,
+      "defense": 45,
+      "hp": 40
+    },
+    "277": {
+      "attack": 115,
+      "defense": 70,
+      "hp": 60
+    },
+    "278": {
+      "attack": 72,
+      "defense": 54,
+      "hp": 40
+    },
+    "279": {
+      "attack": 102,
+      "defense": 109,
+      "hp": 60
+    },
+    "280": {
+      "attack": 56,
+      "defense": 36,
+      "hp": 28
+    },
+    "281": {
+      "attack": 78,
+      "defense": 51,
+      "hp": 38
+    },
+    "282": {
+      "attack": 150,
+      "defense": 96,
+      "hp": 68
+    },
+    "283": {
+      "attack": 64,
+      "defense": 63,
+      "hp": 40
+    },
+    "284": {
+      "attack": 95,
+      "defense": 93,
+      "hp": 70
+    },
+    "285": {
+      "attack": 50,
+      "defense": 72,
+      "hp": 60
+    },
+    "286": {
+      "attack": 152,
+      "defense": 91,
+      "hp": 60
+    },
+    "287": {
+      "attack": 69,
+      "defense": 50,
+      "hp": 60
+    },
+    "288": {
+      "attack": 102,
+      "defense": 70,
+      "hp": 80
+    },
+    "289": {
+      "attack": 197,
+      "defense": 85,
+      "hp": 150
+    },
+    "290": {
+      "attack": 56,
+      "defense": 78,
+      "hp": 31
+    },
+    "291": {
+      "attack": 130,
+      "defense": 68,
+      "hp": 61
+    },
+    "292": {
+      "attack": 101,
+      "defense": 58,
+      "hp": 1
+    },
+    "293": {
+      "attack": 60,
+      "defense": 26,
+      "hp": 64
+    },
+    "294": {
+      "attack": 83,
+      "defense": 46,
+      "hp": 84
+    },
+    "295": {
+      "attack": 109,
+      "defense": 66,
+      "hp": 104
+    },
+    "296": {
+      "attack": 68,
+      "defense": 39,
+      "hp": 72
+    },
+    "297": {
+      "attack": 134,
+      "defense": 69,
+      "hp": 144
+    },
+    "298": {
+      "attack": 29,
+      "defense": 43,
+      "hp": 50
+    },
+    "299": {
+      "attack": 54,
+      "defense": 124,
+      "hp": 30
+    },
+    "300": {
+      "attack": 57,
+      "defense": 43,
+      "hp": 50
+    },
+    "301": {
+      "attack": 81,
+      "defense": 63,
+      "hp": 70
+    },
+    "302": {
+      "attack": 88,
+      "defense": 91,
+      "hp": 50
+    },
+    "303": {
+      "attack": 98,
+      "defense": 106,
+      "hp": 50
+    },
+    "304": {
+      "attack": 79,
+      "defense": 118,
+      "hp": 50
+    },
+    "305": {
+      "attack": 101,
+      "defense": 143,
+      "hp": 60
+    },
+    "306": {
+      "attack": 124,
+      "defense": 168,
+      "hp": 70
+    },
+    "307": {
+      "attack": 53,
+      "defense": 70,
+      "hp": 30
+    },
+    "308": {
+      "attack": 77,
+      "defense": 90,
+      "hp": 60
+    },
+    "309": {
+      "attack": 80,
+      "defense": 49,
+      "hp": 40
+    },
+    "310": {
+      "attack": 134,
+      "defense": 69,
+      "hp": 70
+    },
+    "311": {
+      "attack": 109,
+      "defense": 66,
+      "hp": 60
+    },
+    "312": {
+      "attack": 97,
+      "defense": 76,
+      "hp": 60
+    },
+    "313": {
+      "attack": 93,
+      "defense": 74,
+      "hp": 65
+    },
+    "314": {
+      "attack": 93,
+      "defense": 74,
+      "hp": 65
+    },
+    "315": {
+      "attack": 118,
+      "defense": 86,
+      "hp": 50
+    },
+    "316": {
+      "attack": 54,
+      "defense": 65,
+      "hp": 70
+    },
+    "317": {
+      "attack": 87,
+      "defense": 95,
+      "hp": 100
+    },
+    "318": {
+      "attack": 107,
+      "defense": 41,
+      "hp": 45
+    },
+    "319": {
+      "attack": 149,
+      "defense": 61,
+      "hp": 70
+    },
+    "320": {
+      "attack": 85,
+      "defense": 47,
+      "hp": 130
+    },
+    "322": {
+      "attack": 75,
+      "defense": 66,
+      "hp": 60
+    },
+    "323": {
+      "attack": 116,
+      "defense": 96,
+      "hp": 70
+    },
+    "324": {
+      "attack": 91,
+      "defense": 120,
+      "hp": 70
+    },
+    "325": {
+      "attack": 85,
+      "defense": 63,
+      "hp": 60
+    },
+    "326": {
+      "attack": 111,
+      "defense": 93,
+      "hp": 80
+    },
+    "327": {
+      "attack": 74,
+      "defense": 63,
+      "hp": 60
+    },
+    "328": {
+      "attack": 103,
+      "defense": 54,
+      "hp": 45
+    },
+    "329": {
+      "attack": 86,
+      "defense": 71,
+      "hp": 50
+    },
+    "330": {
+      "attack": 127,
+      "defense": 101,
+      "hp": 80
+    },
+    "331": {
+      "attack": 95,
+      "defense": 52,
+      "hp": 50
+    },
+    "332": {
+      "attack": 131,
+      "defense": 81,
+      "hp": 70
+    },
+    "333": {
+      "attack": 52,
+      "defense": 82,
+      "hp": 45
+    },
+    "334": {
+      "attack": 88,
+      "defense": 121,
+      "hp": 75
+    },
+    "335": {
+      "attack": 142,
+      "defense": 63,
+      "hp": 73
+    },
+    "336": {
+      "attack": 118,
+      "defense": 72,
+      "hp": 73
+    },
+    "337": {
+      "attack": 114,
+      "defense": 93,
+      "hp": 70
+    },
+    "338": {
+      "attack": 114,
+      "defense": 93,
+      "hp": 70
+    },
+    "339": {
+      "attack": 61,
+      "defense": 63,
+      "hp": 50
+    },
+    "340": {
+      "attack": 93,
+      "defense": 93,
+      "hp": 110
+    },
+    "341": {
+      "attack": 90,
+      "defense": 62,
+      "hp": 43
+    },
+    "342": {
+      "attack": 136,
+      "defense": 91,
+      "hp": 63
+    },
+    "343": {
+      "attack": 52,
+      "defense": 77,
+      "hp": 40
+    },
+    "344": {
+      "attack": 87,
+      "defense": 127,
+      "hp": 60
+    },
+    "345": {
+      "attack": 69,
+      "defense": 106,
+      "hp": 66
+    },
+    "346": {
+      "attack": 93,
+      "defense": 126,
+      "hp": 86
+    },
+    "347": {
+      "attack": 115,
+      "defense": 71,
+      "hp": 45
+    },
+    "348": {
+      "attack": 138,
+      "defense": 111,
+      "hp": 75
+    },
+    "349": {
+      "attack": 27,
+      "defense": 49,
+      "hp": 20
+    },
+    "350": {
+      "attack": 122,
+      "defense": 114,
+      "hp": 95
+    },
+    "351": {
+      "attack": 86,
+      "defense": 73,
+      "hp": 70
+    },
+    "352": {
+      "attack": 101,
+      "defense": 98,
+      "hp": 60
+    },
+    "353": {
+      "attack": 87,
+      "defense": 46,
+      "hp": 44
+    },
+    "354": {
+      "attack": 134,
+      "defense": 76,
+      "hp": 64
+    },
+    "355": {
+      "attack": 49,
+      "defense": 102,
+      "hp": 20
+    },
+    "356": {
+      "attack": 78,
+      "defense": 142,
+      "hp": 40
+    },
+    "357": {
+      "attack": 85,
+      "defense": 109,
+      "hp": 99
+    },
+    "358": {
+      "attack": 112,
+      "defense": 81,
+      "hp": 65
+    },
+    "359": {
+      "attack": 153,
+      "defense": 69,
+      "hp": 65
+    },
+    "360": {
+      "attack": 32,
+      "defense": 54,
+      "hp": 95
+    },
+    "361": {
+      "attack": 62,
+      "defense": 53,
+      "hp": 50
+    },
+    "362": {
+      "attack": 100,
+      "defense": 83,
+      "hp": 80
+    },
+    "363": {
+      "attack": 64,
+      "defense": 65,
+      "hp": 70
+    },
+    "364": {
+      "attack": 87,
+      "defense": 85,
+      "hp": 90
+    },
+    "365": {
+      "attack": 112,
+      "defense": 105,
+      "hp": 110
+    },
+    "366": {
+      "attack": 83,
+      "defense": 82,
+      "hp": 35
+    },
+    "367": {
+      "attack": 118,
+      "defense": 102,
+      "hp": 55
+    },
+    "368": {
+      "attack": 129,
+      "defense": 102,
+      "hp": 55
+    },
+    "369": {
+      "attack": 105,
+      "defense": 121,
+      "hp": 100
+    },
+    "370": {
+      "attack": 57,
+      "defense": 72,
+      "hp": 43
+    },
+    "371": {
+      "attack": 88,
+      "defense": 57,
+      "hp": 45
+    },
+    "372": {
+      "attack": 109,
+      "defense": 87,
+      "hp": 65
+    },
+    "373": {
+      "attack": 168,
+      "defense": 104,
+      "hp": 95
+    },
+    "374": {
+      "attack": 64,
+      "defense": 112,
+      "hp": 40
+    },
+    "375": {
+      "attack": 88,
+      "defense": 132,
+      "hp": 60
+    },
+    "376": {
+      "attack": 157,
+      "defense": 152,
+      "hp": 80
+    },
+    "377": {
+      "attack": 114,
+      "defense": 162,
+      "hp": 80
+    },
+    "378": {
+      "attack": 114,
+      "defense": 153,
+      "hp": 80
+    },
+    "379": {
+      "attack": 88,
+      "defense": 186,
+      "hp": 80
+    },
+    "380": {
+      "attack": 142,
+      "defense": 128,
+      "hp": 80
+    },
+    "381": {
+      "attack": 166,
+      "defense": 113,
+      "hp": 80
+    },
+    "382": {
+      "attack": 182,
+      "defense": 127,
+      "hp": 100
+    },
+    "383": {
+      "attack": 182,
+      "defense": 124,
+      "hp": 100
+    },
+    "384": {
+      "attack": 184,
+      "defense": 114,
+      "hp": 105
+    },
+    "385": {
+      "attack": 127,
+      "defense": 142,
+      "hp": 100
+    },
+    "386": {
+      "attack": 206,
+      "defense": 56,
+      "hp": 50
+    },
+    "387": {
+      "attack": 77,
+      "defense": 71,
+      "hp": 55
+    },
+    "388": {
+      "attack": 99,
+      "defense": 87,
+      "hp": 75
+    },
+    "389": {
+      "attack": 125,
+      "defense": 116,
+      "hp": 95
+    },
+    "390": {
+      "attack": 72,
+      "defense": 59,
+      "hp": 44
+    },
+    "391": {
+      "attack": 98,
+      "defense": 76,
+      "hp": 64
+    },
+    "392": {
+      "attack": 134,
+      "defense": 95,
+      "hp": 76
+    },
+    "393": {
+      "attack": 72,
+      "defense": 66,
+      "hp": 53
+    },
+    "394": {
+      "attack": 94,
+      "defense": 84,
+      "hp": 64
+    },
+    "395": {
+      "attack": 128,
+      "defense": 142,
+      "hp": 84
+    },
+    "396": {
+      "attack": 69,
+      "defense": 45,
+      "hp": 40
+    },
+    "397": {
+      "attack": 94,
+      "defense": 60,
+      "hp": 55
+    },
+    "398": {
+      "attack": 151,
+      "defense": 75,
+      "hp": 85
+    },
+    "399": {
+      "attack": 55,
+      "defense": 43,
+      "hp": 59
+    },
+    "400": {
+      "attack": 103,
+      "defense": 75,
+      "hp": 79
+    },
+    "401": {
+      "attack": 35,
+      "defense": 50,
+      "hp": 37
+    },
+    "402": {
+      "attack": 102,
+      "defense": 60,
+      "hp": 77
+    },
+    "403": {
+      "attack": 77,
+      "defense": 43,
+      "hp": 45
+    },
+    "404": {
+      "attack": 101,
+      "defense": 58,
+      "hp": 60
+    },
+    "405": {
+      "attack": 141,
+      "defense": 88,
+      "hp": 80
+    },
+    "406": {
+      "attack": 63,
+      "defense": 76,
+      "hp": 40
+    },
+    "407": {
+      "attack": 153,
+      "defense": 104,
+      "hp": 60
+    },
+    "408": {
+      "attack": 142,
+      "defense": 47,
+      "hp": 67
+    },
+    "409": {
+      "attack": 184,
+      "defense": 67,
+      "hp": 97
+    },
+    "410": {
+      "attack": 52,
+      "defense": 151,
+      "hp": 30
+    },
+    "411": {
+      "attack": 61,
+      "defense": 201,
+      "hp": 60
+    },
+    "412": {
+      "attack": 39,
+      "defense": 54,
+      "hp": 40
+    },
+    "413": {
+      "attack": 89,
+      "defense": 116,
+      "hp": 60
+    },
+    "414": {
+      "attack": 112,
+      "defense": 71,
+      "hp": 70
+    },
+    "415": {
+      "attack": 43,
+      "defense": 63,
+      "hp": 30
+    },
+    "416": {
+      "attack": 91,
+      "defense": 123,
+      "hp": 70
+    },
+    "417": {
+      "attack": 62,
+      "defense": 89,
+      "hp": 60
+    },
+    "418": {
+      "attack": 84,
+      "defense": 44,
+      "hp": 55
+    },
+    "419": {
+      "attack": 137,
+      "defense": 64,
+      "hp": 85
+    },
+    "420": {
+      "attack": 72,
+      "defense": 61,
+      "hp": 45
+    },
+    "421": {
+      "attack": 109,
+      "defense": 86,
+      "hp": 70
+    },
+    "422": {
+      "attack": 67,
+      "defense": 67,
+      "hp": 76
+    },
+    "423": {
+      "attack": 103,
+      "defense": 96,
+      "hp": 111
+    },
+    "424": {
+      "attack": 131,
+      "defense": 69,
+      "hp": 75
+    },
+    "425": {
+      "attack": 76,
+      "defense": 63,
+      "hp": 90
+    },
+    "426": {
+      "attack": 111,
+      "defense": 73,
+      "hp": 150
+    },
+    "427": {
+      "attack": 85,
+      "defense": 53,
+      "hp": 55
+    },
+    "428": {
+      "attack": 100,
+      "defense": 93,
+      "hp": 65
+    },
+    "429": {
+      "attack": 134,
+      "defense": 94,
+      "hp": 60
+    },
+    "430": {
+      "attack": 147,
+      "defense": 73,
+      "hp": 100
+    },
+    "431": {
+      "attack": 72,
+      "defense": 42,
+      "hp": 49
+    },
+    "432": {
+      "attack": 109,
+      "defense": 64,
+      "hp": 71
+    },
+    "433": {
+      "attack": 77,
+      "defense": 56,
+      "hp": 45
+    },
+    "434": {
+      "attack": 80,
+      "defense": 65,
+      "hp": 63
+    },
+    "435": {
+      "attack": 115,
+      "defense": 85,
+      "hp": 103
+    },
+    "436": {
+      "attack": 33,
+      "defense": 128,
+      "hp": 57
+    },
+    "437": {
+      "attack": 98,
+      "defense": 158,
+      "hp": 67
+    },
+    "438": {
+      "attack": 84,
+      "defense": 82,
+      "hp": 50
+    },
+    "439": {
+      "attack": 85,
+      "defense": 73,
+      "hp": 20
+    },
+    "440": {
+      "attack": 25,
+      "defense": 38,
+      "hp": 100
+    },
+    "441": {
+      "attack": 116,
+      "defense": 58,
+      "hp": 76
+    },
+    "442": {
+      "attack": 102,
+      "defense": 129,
+      "hp": 50
+    },
+    "443": {
+      "attack": 81,
+      "defense": 66,
+      "hp": 58
+    },
+    "444": {
+      "attack": 111,
+      "defense": 81,
+      "hp": 68
+    },
+    "445": {
+      "attack": 163,
+      "defense": 111,
+      "hp": 108
+    },
+    "446": {
+      "attack": 88,
+      "defense": 65,
+      "hp": 135
+    },
+    "447": {
+      "attack": 85,
+      "defense": 49,
+      "hp": 40
+    },
+    "448": {
+      "attack": 142,
+      "defense": 115,
+      "hp": 70
+    },
+    "449": {
+      "attack": 81,
+      "defense": 69,
+      "hp": 68
+    },
+    "450": {
+      "attack": 125,
+      "defense": 104,
+      "hp": 108
+    },
+    "451": {
+      "attack": 64,
+      "defense": 93,
+      "hp": 40
+    },
+    "452": {
+      "attack": 114,
+      "defense": 113,
+      "hp": 70
+    },
+    "453": {
+      "attack": 73,
+      "defense": 61,
+      "hp": 48
+    },
+    "454": {
+      "attack": 130,
+      "defense": 86,
+      "hp": 83
+    },
+    "455": {
+      "attack": 113,
+      "defense": 84,
+      "hp": 74
+    },
+    "456": {
+      "attack": 63,
+      "defense": 70,
+      "hp": 49
+    },
+    "457": {
+      "attack": 89,
+      "defense": 93,
+      "hp": 69
+    },
+    "458": {
+      "attack": 72,
+      "defense": 109,
+      "hp": 45
+    },
+    "459": {
+      "attack": 73,
+      "defense": 70,
+      "hp": 60
+    },
+    "460": {
+      "attack": 108,
+      "defense": 95,
+      "hp": 90
+    },
+    "461": {
+      "attack": 159,
+      "defense": 87,
+      "hp": 70
+    },
+    "462": {
+      "attack": 148,
+      "defense": 147,
+      "hp": 70
+    },
+    "463": {
+      "attack": 98,
+      "defense": 98,
+      "hp": 110
+    },
+    "464": {
+      "attack": 151,
+      "defense": 113,
+      "hp": 115
+    },
+    "465": {
+      "attack": 124,
+      "defense": 99,
+      "hp": 100
+    },
+    "466": {
+      "attack": 152,
+      "defense": 85,
+      "hp": 75
+    },
+    "467": {
+      "attack": 151,
+      "defense": 96,
+      "hp": 75
+    },
+    "468": {
+      "attack": 144,
+      "defense": 120,
+      "hp": 85
+    },
+    "469": {
+      "attack": 144,
+      "defense": 92,
+      "hp": 86
+    },
+    "470": {
+      "attack": 137,
+      "defense": 109,
+      "hp": 65
+    },
+    "471": {
+      "attack": 150,
+      "defense": 105,
+      "hp": 65
+    },
+    "472": {
+      "attack": 120,
+      "defense": 121,
+      "hp": 75
+    },
+    "473": {
+      "attack": 155,
+      "defense": 82,
+      "hp": 110
+    },
+    "474": {
+      "attack": 164,
+      "defense": 75,
+      "hp": 85
+    },
+    "475": {
+      "attack": 150,
+      "defense": 105,
+      "hp": 68
+    },
+    "476": {
+      "attack": 86,
+      "defense": 195,
+      "hp": 60
+    },
+    "477": {
+      "attack": 112,
+      "defense": 147,
+      "hp": 45
+    },
+    "478": {
+      "attack": 106,
+      "defense": 85,
+      "hp": 70
+    },
+    "479": {
+      "attack": 119,
+      "defense": 98,
+      "hp": 50
+    },
+    "480": {
+      "attack": 97,
+      "defense": 136,
+      "hp": 75
+    },
+    "481": {
+      "attack": 127,
+      "defense": 111,
+      "hp": 80
+    },
+    "482": {
+      "attack": 161,
+      "defense": 76,
+      "hp": 75
+    },
+    "483": {
+      "attack": 182,
+      "defense": 158,
+      "hp": 100
+    },
+    "484": {
+      "attack": 186,
+      "defense": 134,
+      "hp": 90
+    },
+    "485": {
+      "attack": 154,
+      "defense": 157,
+      "hp": 91
+    },
+    "486": {
+      "attack": 197,
+      "defense": 113,
+      "hp": 110
+    },
+    "487": {
+      "attack": 125,
+      "defense": 144,
+      "hp": 150
+    },
+    "488": {
+      "attack": 95,
+      "defense": 131,
+      "hp": 120
+    },
+    "489": {
+      "attack": 100,
+      "defense": 92,
+      "hp": 80
+    },
+    "490": {
+      "attack": 127,
+      "defense": 112,
+      "hp": 100
+    },
+    "491": {
+      "attack": 177,
+      "defense": 99,
+      "hp": 70
+    },
+    "492": {
+      "attack": 127,
+      "defense": 112,
+      "hp": 100
+    },
+    "493": {
+      "attack": 157,
+      "defense": 123,
+      "hp": 120
+    }
+  },
+  "forms": {
+    "386:1": {
+      "attack": 245,
+      "defense": 26,
+      "hp": 50
+    },
+    "386:2": {
+      "attack": 90,
+      "defense": 166,
+      "hp": 50
+    },
+    "386:3": {
+      "attack": 142,
+      "defense": 96,
+      "hp": 50
+    },
+    "413:1": {
+      "attack": 89,
+      "defense": 113,
+      "hp": 60
+    },
+    "413:2": {
+      "attack": 79,
+      "defense": 140,
+      "hp": 60
+    },
+    "487:1": {
+      "attack": 147,
+      "defense": 124,
+      "hp": 150
+    },
+    "492:1": {
+      "attack": 159,
+      "defense": 99,
+      "hp": 100
+    },
+    "479:1": {
+      "attack": 129,
+      "defense": 128,
+      "hp": 50
+    },
+    "479:2": {
+      "attack": 129,
+      "defense": 128,
+      "hp": 50
+    },
+    "479:3": {
+      "attack": 129,
+      "defense": 128,
+      "hp": 50
+    },
+    "479:4": {
+      "attack": 129,
+      "defense": 128,
+      "hp": 50
+    },
+    "479:5": {
+      "attack": 129,
+      "defense": 128,
+      "hp": 50
+    },
+    "412:1": {
+      "attack": 39,
+      "defense": 54,
+      "hp": 40
+    },
+    "412:2": {
+      "attack": 39,
+      "defense": 54,
+      "hp": 40
+    },
+    "421:1": {
+      "attack": 109,
+      "defense": 86,
+      "hp": 70
+    },
+    "422:1": {
+      "attack": 67,
+      "defense": 67,
+      "hp": 76
+    },
+    "423:1": {
+      "attack": 103,
+      "defense": 96,
+      "hp": 111
+    }
+  }
+}
