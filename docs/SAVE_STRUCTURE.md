@@ -8,7 +8,7 @@ Applies to the supplied `savedata*.bin` files. All offsets refer to decrypted da
 - Three save slots: **A, B, C**.
 - First 20 bytes: **SHA-1 of all bytes from 0x14 onward**.
 - Slot A money: **4-byte unsigned integer at `0x65`**, big-endian.
-- Remaining header and slot metadata: not fully decoded.
+- The fixed per-slot header has partially decoded progression and play-time fields; per-slot collection records follow it.
 - File encoding: additive obfuscation in 16-byte blocks; see `src/rumble_save_tool/inspect_saves.py`.
 
 ## Pokemon boxes
@@ -48,6 +48,23 @@ The timestamp field is a 4-byte big-endian count of seconds since **2000-01-01 0
 
 These fields sit `0x21` bytes before their box starts; absolute offsets shift with preceding data. A's timestamp in `savedata-metadata-only.bin` is **2026-09-04 16:22:45**. The B/C timestamp interpretation uses the same relative field layout.
 
+## Per-slot game and collection data
+
+The decompiled `SlotData::Data` has a fixed size of `0x1300` bytes. Relative to its start, it contains rank (`+0x0C`), collection level (`+0x0D`), area (`+0x0E`), mode (`+0x0F`), 1,200 map records beginning at `+0x10`, counters at `+0x4C0` and `+0x4C4`, a 64-bit time at `+0x4C8`, registry count at `+0x4D0`, elapsed seconds at `+0x4D4`, and ticket species/form at `+0x4D8`/`+0x4DA`. The map-record dimensions are `[3][5][8][10]`; each 32-bit record stores flags in its lower 22 bits and a clear count in its upper 10 bits. The meanings of individual counters, maps, and area/mode IDs need more research.
+
+After the fixed slot data, serialized vectors appear in a known order. Every vector has an element-size and count header, and each element ends with a one-byte `VECTOR_STRUCT_NONE` marker. The per-species `SD_PiiCollectionData` vector has 496 16-byte entries indexed by internal species ID:
+
+| Entry data | Meaning |
+|---|---|
+| `+0x00` bits 31–29 | Collection state: 0 unknown, 1 appeared, 2 defeated, 3 collected. |
+| `+0x00` bits 28–20 | Best Battle Royal rank: three 3-bit values in Normal, Hard, Easy order. Values 0–3 correspond to none, Bronze, Silver, Gold. |
+| `+0x00` bit 19 | Legacy first rare-form flag; the game folds it into rare-form bit 0 when loading. |
+| `+0x04` | Defeat count, unsigned 32-bit; game logic caps it at 9,999,999. |
+| `+0x08` | Normal collected-form bitmask, unsigned 32-bit. |
+| `+0x0C` | Rare-color collected-form bitmask, unsigned 32-bit. |
+
+These collection records belong to each save slot. The editors provide named controls for collection status, defeat count, Battle Royal medals, and normal/rare collected forms alongside the shared Pokédex flags. The CLI `collection` command reports the values without modifying the save. The collected forms are separate from the shared Pokédex seen-form list.
+
 ## Selected Pokemon (slot A)
 
 Offsets below are relative to A's box start. In the current saves:
@@ -80,6 +97,10 @@ Current field interpretations used by the editor:
 | `+0x2C` | 1 | End-of-structure marker. |
 
 The editor uses bytes `+0x22` through `+0x2B` as a ten-byte fingerprint when matching selected records. Its in-game purpose is unknown.
+
+## Editing coverage
+
+The editor exposes friendly controls for fields whose meanings are confirmed, including Pokémon records, shared Pokédex entries, currency, and per-slot collection records. Unknown bytes are preserved during edits. Save sections that have not yet been decoded are not exposed as unexplained offsets; complete editable coverage requires documenting those fields first.
 
 Move ID names are mapped in `src/rumble_save_tool/constants.py` and `resources/data/moves.json`.
 
@@ -679,7 +700,8 @@ Trait IDs and effects (IDs are the values stored at record offset `+0x10`; unlis
 - Full Power and HP behavior across level caps, special forms, and game states.
 - Shiny behavior across other game versions/regions.
 - Forms and low species bits.
-- Full slot metadata and internal checksum rules.
+- Map/counter meanings, area/mode IDs, and remaining slot metadata.
+- Internal checksum rules.
 
 Attack/defense star ratings are external species reference data in `resources/data/species.json`. Power and HP are calculated by the game rather than stored as direct save fields. The editor calculates Power for supported records.
 
@@ -693,3 +715,5 @@ power = truncate(step ^ 1.1)
 ```
 
 The intermediate values depend on species base stats, level, the random seed, and stat bonuses. The game uses 32-bit floating-point arithmetic. `hp_for_power` can differ from displayed maximum HP, and transferred Pokemon may be level-capped. The editor calculates Power for supported species and forms, including transfer caps when slot progression is recognized; unsupported records show no value. The calculation has matched all tested records, though unusual or untested game states may still differ; see [POWER_RESEARCH.md](POWER_RESEARCH.md) for the formulas, verification evidence, and limitations.
+
+Collection and slot-field interpretations are based on the game's [save structures](https://github.com/revvmp/pokemon-rumble-decomp/blob/main/include/game/io/SaveData.h), [collection data serializer](https://github.com/revvmp/pokemon-rumble-decomp/blob/main/src/game/pokemon/CPiiCollectionBox.cpp), [collection event hooks](https://github.com/revvmp/pokemon-rumble-decomp/blob/main/src/game/script/ScriptPiiMotion.cpp), and [collection screen](https://github.com/revvmp/pokemon-rumble-decomp/blob/main/src/game/ui/CDlgCollection.cpp).

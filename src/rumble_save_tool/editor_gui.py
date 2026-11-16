@@ -11,6 +11,7 @@ from .constants import MOVES, Trait
 from .paths import DATA, RUMBLE_ICONS, default_dolphin_save
 from .save_editor import CROWN_VALUES
 from .power import estimate_power, slot_power_context
+from .save_stats import slot_collection_stats
 
 SPECIES = json.loads((DATA / 'species.json').read_text(encoding='utf-8'))['species']
 PLATINUM_VALID_MOVES = json.loads((DATA / 'platinum_valid_moves.json').read_text(encoding='utf-8'))['species']
@@ -63,6 +64,11 @@ class Editor(tk.Tk):
         self.vars = {k: tk.StringVar() for k in ('species','move1','move2','trait','strength','individual','dex_species','forms','box_form')}
         self.money = tk.StringVar(value='0')
         self.power_text = tk.StringVar(value='Power: --')
+        self.collection_stats = None
+        self.collection_text = tk.StringVar(value='Open a save to view collection records.')
+        self.collection_status = tk.StringVar(value='Unknown')
+        self.collection_defeated = tk.StringVar(value='0')
+        self.collection_ranks = [tk.StringVar(value='None') for _ in range(3)]
         self.path_text = tk.StringVar(value='No savefile loaded')
         self.danger = tk.BooleanVar(value=False)
         self.original_individual = ''
@@ -432,6 +438,20 @@ class Editor(tk.Tk):
         ttk.Button(controls, text='Mark all obtained', width=18, command=self.mark_all_obtained).grid(row=9, column=1, pady=3)
         ttk.Button(controls, text='Mark all shiny', width=18, command=self.mark_all_shiny).grid(row=10, column=0, pady=3)
         ttk.Button(controls, text='Mark all crowned', width=18, command=self.mark_all_crowned).grid(row=10, column=1, pady=3)
+        ttk.Label(controls, text='Game collection').grid(row=11, column=0, columnspan=2, sticky='w', pady=(8, 2))
+        self.collection_status_box = ttk.Combobox(controls, textvariable=self.collection_status, values=('Unknown','Appeared','Defeated','Collected'), state='readonly', width=15)
+        self.collection_status_box.grid(row=12, column=0, columnspan=2, sticky='w')
+        self.collection_status_box.bind('<<ComboboxSelected>>', lambda _event: self.apply_collection())
+        ttk.Label(controls, text='Times defeated').grid(row=13, column=0, sticky='w')
+        self.collection_defeated_box = ttk.Spinbox(controls, textvariable=self.collection_defeated, from_=0, to=9999999, width=12, command=self.apply_collection)
+        self.collection_defeated_box.grid(row=13, column=1, sticky='w')
+        self.collection_defeated_box.bind('<FocusOut>', lambda _event: self.apply_collection())
+        self.collection_defeated_box.bind('<Return>', lambda _event: self.apply_collection())
+        for i, label in enumerate(('Battle Royal Normal', 'Battle Royal Hard', 'Battle Royal Easy')):
+            ttk.Label(controls, text=label).grid(row=14+i, column=0, sticky='w')
+            combo = ttk.Combobox(controls, textvariable=self.collection_ranks[i], values=('None','Bronze','Silver','Gold'), state='readonly', width=12)
+            combo.grid(row=14+i, column=1, sticky='w'); combo.bind('<<ComboboxSelected>>', lambda _event: self.apply_collection())
+        ttk.Label(controls, textvariable=self.collection_text, wraplength=290, justify='left').grid(row=17, column=0, columnspan=2, sticky='w', pady=(4, 0))
 
     def _dex_select(self, _=None):
         s = self.dex_list.curselection()
@@ -591,10 +611,22 @@ class Editor(tk.Tk):
 
     def refresh(self):
         self.list.delete(0, 'end'); self.records = []
-        if self.data is None: return
+        if self.data is None: return False
         self.money.set(str(int.from_bytes(self.data[0x65:0x69], 'big')))
+        try:
+            sections = find_box_sections(self.data)
+        except ValueError:
+            self.collection_stats = None
+            self.power_context = None
+            self.selected_offset = None
+            self.tabs.tab(0, state='disabled')
+            self.status.config(text='Box structure is invalid. Reopen an unmodified save backup to continue editing.')
+            return False
+        self.tabs.tab(0, state='normal')
+        selected_start = sections['ABC'.index(self.save_slot.get())][0]
+        self.collection_stats = slot_collection_stats(self.data, selected_start)
         self.update_dex_list()
-        for slot, (start, records) in zip('ABC', find_box_sections(self.data)):
+        for slot, (start, records) in zip('ABC', sections):
             if slot != self.save_slot.get():
                 continue
             self.power_context = slot_power_context(self.data, start)
@@ -613,6 +645,9 @@ class Editor(tk.Tk):
             for i, r, sid, name, _favorite in rows:
                 self.records.append((slot, i, start + i * STRIDE))
                 self.list.insert('end', self._box_row_text(slot, i, r))
+        if self.dex_list.curselection():
+            self.load_dex()
+        return True
 
     def _box_row_text(self, slot, index, record):
         """Format one box record for the compact selector list."""
@@ -623,7 +658,7 @@ class Editor(tk.Tk):
         trait_name = '' if trait_id == 0 else Trait.label_for(trait_id)
         marker = '★ ' if shiny else '☆ '
         power = estimate_power(record, self.power_context)
-        power_label = f'~{power}' if power is not None else '--'
+        power_label = str(power) if power is not None else '--'
         return f'{slot}{index:03d} {marker}{name[:12]:12s} {power_label:>5s} {trait_name}'
 
     def _update_box_row(self, offset):
@@ -923,7 +958,38 @@ class Editor(tk.Tk):
             sid = int(self.vars['dex_species'].get(), 0); off = self.dex_offset(sid)
             self._set_forms_options(sid)
             self.obtained.set(self.data[off] >= 0x60); self.seen.set(bool(self.data[off+11])); self.vars['forms'].set(self._forms_label(self.data[off+11], sid)); self.shiny.set(self.data[off+15] == 1); self.centered.set(bool(self.data[off+1] & 0x80)); self.crown.set(next((k for k,v in CROWN_VALUES.items() if self.data[off] == v), 'none'))
+            stats = self.collection_stats.get(sid) if self.collection_stats is not None else None
+            if stats is None:
+                self.collection_text.set('Collection data unavailable for this slot.')
+                self.collection_status_box.configure(state='disabled'); self.collection_defeated_box.configure(state='disabled')
+            else:
+                self.collection_status_box.configure(state='readonly'); self.collection_defeated_box.configure(state='normal')
+                self.collection_status.set({0:'Unknown',1:'Appeared',2:'Defeated',3:'Collected'}.get(stats['collection_type'], 'Unknown'))
+                self.collection_defeated.set(str(stats['defeated']))
+                for var, value in zip(self.collection_ranks, stats['battle_royal']): var.set({0:'None',1:'Bronze',2:'Silver',3:'Gold'}.get(value,'None'))
+                ranks = '/'.join({0: '-', 1: 'Bronze', 2: 'Silver', 3: 'Gold'}.get(value, f'?{value}') for value in stats['battle_royal'])
+                def form_names(mask):
+                    names = self._form_names(sid)
+                    return ', '.join(names[i] if i < len(names) else f'Form {i}' for i in range(32) if mask & (1 << i)) or 'None'
+                status = {0: 'Unknown', 1: 'Appeared', 2: 'Defeated', 3: 'Collected'}.get(stats['collection_type'], f"Type {stats['collection_type']}")
+                self.collection_text.set(f"Status: {status}\nDefeated: {stats['defeated']}\nBattle Royal N/H/E: {ranks}\nNormal forms: {form_names(stats['normal_forms'])}\nRare forms: {form_names(stats['rare_forms'])}")
         except Exception as e: messagebox.showerror('Dex load failed', str(e))
+
+    def apply_collection(self):
+        if self.data is None or self.collection_stats is None:
+            return
+        try:
+            sid = int(self.vars['dex_species'].get(), 0); stats = self.collection_stats[sid]
+            defeated = int(self.collection_defeated.get())
+            if not 0 <= defeated <= 9_999_999: raise ValueError('Times defeated must be from 0 to 9,999,999.')
+            offset = stats['record_offset']; packed = int.from_bytes(self.data[offset:offset+4], 'big')
+            statuses = {'Unknown':0,'Appeared':1,'Defeated':2,'Collected':3}; packed = (packed & 0x1fffffff) | (statuses[self.collection_status.get()] << 29)
+            rank_values = {'None':0,'Bronze':1,'Silver':2,'Gold':3}
+            for value, shift in zip(self.collection_ranks, (26,23,20)): packed = (packed & ~(7 << shift)) | (rank_values[value.get()] << shift)
+            self.data[offset:offset+4] = packed.to_bytes(4,'big'); self.data[offset+4:offset+8] = defeated.to_bytes(4,'big')
+            self.collection_stats[sid].update(collection_type=statuses[self.collection_status.get()], defeated=defeated, battle_royal=tuple(rank_values[v.get()] for v in self.collection_ranks))
+            self._mark_modified()
+        except (KeyError, ValueError) as e: messagebox.showerror('Collection edit failed', str(e))
 
     def apply_dex(self):
         try:

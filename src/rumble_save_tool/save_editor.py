@@ -4,6 +4,7 @@ from pathlib import Path
 from .inspect_saves import STRIDE, decode_save, encode_save, find_box_sections, validate_save_file
 from .paths import DATA
 from .power import estimate_power, slot_power_context
+from .save_stats import slot_collection_stats
 
 SIZE = 0x34000
 CROWN_VALUES = {'none': 0x60, 'bronze': 0x64, 'silver': 0x68, 'gold': 0x6C}
@@ -75,6 +76,23 @@ def cmd_validate(args):
         raise SystemExit(f'Invalid save: {exc}')
     counts = ', '.join(f'{slot}={count}' for slot, count in result['box_counts'].items())
     print(f"Valid save: {result['path']} ({result['encrypted_size']} bytes; boxes {counts})")
+
+def cmd_collection(args):
+    data = load_save(args.input)
+    start, _records = find_box_sections(data)['ABC'.index(args.slot)]
+    stats = slot_collection_stats(data, start)
+    if stats is None:
+        raise SystemExit(f'Could not read collection data for slot {args.slot}')
+    species = __import__('json').loads((DATA / 'species.json').read_text())['species']
+    states = ('unknown', 'appeared', 'defeated', 'collected')
+    for sid, values in stats.items():
+        if not any((values['collection_type'], values['defeated'], *values['battle_royal'], values['normal_forms'], values['rare_forms'])):
+            continue
+        name = species.get(str(sid), {}).get('name', f'Unknown ({sid})')
+        ranks = '/'.join(map(str, values['battle_royal']))
+        print(f'{sid:3d} {name:14s} status={states[values["collection_type"]] if values["collection_type"] < len(states) else values["collection_type"]} '
+              f'defeated={values["defeated"]} battle_royal(N/H/E)={ranks} '
+              f'normal_forms=0x{values["normal_forms"]:08x} rare_forms=0x{values["rare_forms"]:08x}')
 
 def cmd_edit(args):
     data = load_save(args.input)
@@ -180,6 +198,12 @@ def main():
     l.add_argument('--slot', choices='ABC', default='A', help='Save slot to list (default: A).')
     l.set_defaults(func=cmd_list)
 
+    c = sub.add_parser('collection', help='List per-species collection records for a save slot.',
+                       description='Show collection status, defeat counts, Battle Royal ranks, and collected form masks.')
+    c.add_argument('input', type=Path, help='Encrypted or decrypted savedata.bin')
+    c.add_argument('--slot', choices='ABC', default='A', help='Save slot to list (default: A).')
+    c.set_defaults(func=cmd_collection)
+
     e = sub.add_parser('edit-pokemon', help='Edit one Pokémon box record.',
                        description='Change selected fields in one 45-byte Pokémon record.')
     e.add_argument('input', type=Path, help='Input savedata.bin')
@@ -232,9 +256,9 @@ def main():
     v.set_defaults(func=cmd_validate)
 
     h = sub.add_parser('help', help='Show general or command-specific help.')
-    h.add_argument('topic', nargs='?', choices=('list', 'edit-pokemon', 'edit-dex', 'delete', 'validate'), help='Command to describe.')
+    h.add_argument('topic', nargs='?', choices=('list', 'collection', 'edit-pokemon', 'edit-dex', 'delete', 'validate'), help='Command to describe.')
     h.set_defaults(func=show_help, root_parser=p, command_parsers={
-        'list': l, 'edit-pokemon': e, 'edit-dex': d, 'delete': dl, 'validate': v,
+        'list': l, 'collection': c, 'edit-pokemon': e, 'edit-dex': d, 'delete': dl, 'validate': v,
     })
 
     args = p.parse_args()

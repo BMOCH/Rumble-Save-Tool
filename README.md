@@ -36,7 +36,9 @@ macOS:   ~/Library/Application Support/Dolphin Emulator/Wii/title/00010001/57505
 Linux:   ~/.dolphin-emu/Wii/title/00010001/57505345/data/savedata.bin
 ```
 
-The box editor shows Power for supported records and supports species, form, moves, traits, favorite/shiny flags, strength, individual bytes, duplicating records, and transferring a selected Pokemon between saves. The box list can be kept in box-number order, sorted by species name or Pokédex order, or sorted with favorited Pokémon first. Export creates a portable `.pokemon.json` record; import appends it to the currently selected box. Platinum-derived valid moves for the selected species are grouped first and shown in green. The Pokedex tab supports seen, obtained, shiny, form, and crown flags, including bulk actions. **Validate save** checks the loaded save's checksum and box structure.
+The editor provides named controls for Pokémon, Pokédex, currency, and per-slot collection values. Unknown fields are preserved when you save. The checksum and format padding are managed automatically.
+
+The box editor supports species, form, moves, traits, favorite/shiny flags, strength, individual bytes, duplicating records, and transferring a selected Pokémon between saves. The box list can be kept in box-number order, sorted by species name or Pokédex order, or sorted with favorited Pokémon first. Export creates a portable `.pokemon.json` record; import appends it to the currently selected box. Platinum-derived valid moves for the selected species are grouped first and shown in green. The Pokédex tab supports shared seen, obtained, shiny, form, and crown flags, plus per-slot collection status, defeat counts, Battle Royal medals, and collected-form masks.
 
 ## Command-line editor
 
@@ -48,6 +50,13 @@ python save_editor.py edit-dex saves/savedata.bin dex-edited.bin --species 479 -
 python save_editor.py delete saves/savedata.bin reduced.bin --slot A --count 100 --order weakest --non-shiny-only
 python save_editor.py delete saves/savedata.bin reduced.bin --slot A --index 12 --index 25
 python save_editor.py validate saves/savedata.bin
+```
+
+Inspect a slot's per-species collection records without modifying the save:
+
+```powershell
+python save_editor.py collection saves/savedata.bin --slot A
+
 ```
 
 The `delete` command accepts direct record indices or a count with weakest/strongest ordering. Selection filters include species, trait, shiny status, favorite status, and stored-strength ranges.
@@ -75,7 +84,7 @@ To validate source syntax before packaging, run `python -m compileall .`.
 
 ## Browser editor and GitHub Pages
 
-The browser editor supports editing Pokémon fields, P, and shared Pokédex entries. Open a Pokémon Rumble Wii `savedata.bin`, apply changes, and download the result. Processing stays in the browser; no save is uploaded. The desktop editor provides additional features such as duplication, transfer, and bulk operations.
+The browser editor supports Pokémon fields, P, the shared Pokédex, and per-slot collection records. Open a Pokémon Rumble Wii `savedata.bin`, apply changes, and download the result. Processing stays in the browser; no save is uploaded. The desktop editor also supports duplication, transfer, and bulk operations.
 
 To preview locally, run `python -m http.server` from the repository root and visit `http://localhost:8000/`. Web Crypto requires localhost or HTTPS.
 
